@@ -91,11 +91,11 @@
       						
       						<div class="field">
       							<label>상품코드</label>
-       	 						<input type="text" name="prod_code" placeholder="상품코드">
+       	 						<input type="text" name="prod_code" placeholder="상품코드" disabled>
       						</div>
       						<div class="field">
       							<label>상품명</label>
-       	 						<input type="text" name="prod_name" placeholder="상품명">
+       	 						<input type="text" name="prod_name" placeholder="상품명" disabled>
       						</div>
       						<div class="field">
       							<label>판매수량</label>
