@@ -45,7 +45,7 @@
 							<div class="twelve wide right aligned column">
 								<div class="ui small basic icon buttons">
 							  		<button class="ui button" id="addButton"><i class="plus icon"></i></button>
-							 		<button class="ui button" id="deleteButton"><i class="minus icon"></i></button>
+							 		<button class="ui button disabled" id="deleteButton"><i class="minus icon"></i></button>
 								</div>
 							</div>
 						</div>
@@ -58,34 +58,34 @@
 				<div class="ui divider"></div>
 		
 				<div class="ui left aligned segment" id="inputSegment">
-					<div class="ui form" id="inputForm">
+					<form class="ui form" id="inputForm">
 						<div class="four fields">
       						<div class="field">
       							<label>판매일</label>
-        						<input type="date" name="saleDate" id="saleDateInput">
+        						<input type="date" name="saleDate" id="saleDateInput" onChange="onChangeListener();" >
       						</div>
       						
       						<div class="field">
       							<label>상품코드</label>
-       	 						<input type="text" name="prodCode" placeholder="상품코드" disabled>
+       	 						<input type="text" name="prodCode" id="prodCodeInput" placeholder="상품코드" onChange="onChangeListener();" disabled>
       						</div>
       						<div class="field">
       							<label>상품명</label>
-       	 						<input type="text" name="prodName" placeholder="상품명" disabled>
+       	 						<input type="text" name="prodName" id="prodNameInput" placeholder="상품명" onChange="onChangeListener();" disabled>
       						</div>
       						<div class="field">
       							<label>판매수량</label>
-       	 						<input type="number" name="saleCount" id="saleCountInput" placeholder="판매수량">
+       	 						<input type="number" name="saleCount" id="saleCountInput" placeholder="판매수량" onChange="onChangeListener();">
       						</div>
     					</div>
     					
     					<div class="ui divider"></div>
       					
       					<div style="text-align:right;">
-      						<input type="submit" class="ui button" id="resetButton" value="취소">
-     						<input type="submit" class="ui blue button" id="saveButton" value="저장">
+      						<input type="reset" class="ui button" id="resetButton" value="취소">
+     						<input type="button" class="ui blue button" id="saveButton" value="저장">
      					</div>
-					</div>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -105,11 +105,17 @@
 		resetButton = $('#resetButton');
 		
 		saleDateInput = $('#saleDateInput');
+		prodCodeInput = $('#prodCodeInput');
+		prodNameInput = $('#prodNameInput');
 		saleCountInput = $('#saleCountInput');
 		
-		inputForm = $('#inputForm');
+		inputForm = $('#inputForm')[0];
 		
 		table = null;
+		
+		var isSelected = false;
+		var isEditing = false;
+		var selectedRowId = -1;
 		
 		$(document).ready(function() {
 		 	initialize();
@@ -121,7 +127,6 @@
 			
 			initializeTable();
 			loadTableData();
-			
 		}
 		
 		function initializeTable() {
@@ -136,7 +141,7 @@
 			 	],
 			 	
 			 	rowClick:function(e, row){
-			 		alert("Row " + row.getData().saleDate + " Clicked!!!!");
+			 		tableRowClickListener(e, row);
 			 	},
 			});
 		}
@@ -156,6 +161,8 @@
 				resetButton.removeClass('disabled');
 				saveButton.removeClass('disabled');
 			} else {
+				resetInput();
+				
 				inputSegment.addClass('disabled');
 				saleDateInput.attr('disabled', true);
 				saleCountInput.attr('disabled', true);
@@ -164,34 +171,85 @@
 			}
 		}
 		
-		function loadTableData() {
+		function loadTableData(data) {
 			var tabledata = [
 			 	{id:1, saleDate:"2019-04-14", prodCode:"1521", prodName:"사과잼", saleCount:"1"},
-			 	{id:2, saleDate:"2019-04-14", prodCode:"1521", prodName:"사과잼", saleCount:"1"},
-			 	{id:3, saleDate:"2019-04-14", prodCode:"1521", prodName:"사과잼", saleCount:"1"},
-			 	{id:4, saleDate:"2019-04-14", prodCode:"1521", prodName:"사과잼", saleCount:"1"},
-			 	{id:5, saleDate:"2019-04-14", prodCode:"1521", prodName:"사과잼", saleCount:"1"},
+			 	{id:2, saleDate:"2019-04-15", prodCode:"1522", prodName:"포도잼", saleCount:"2"},
+			 	{id:3, saleDate:"2019-04-16", prodCode:"1523", prodName:"딸기잼", saleCount:"3"},
+			 	{id:4, saleDate:"2019-04-17", prodCode:"1524", prodName:"망고잼", saleCount:"1"},
+			 	{id:5, saleDate:"2019-04-18", prodCode:"1525", prodName:"꿀잼", saleCount:"1"},
 			 ];
 			
 			table.setData(tabledata);
 		}
 		
+		function loadInputData(data) {
+			saleDateInput.val(data.saleDate);
+			prodCodeInput.val(data.prodCode);
+			prodNameInput.val(data.prodName);
+			saleCountInput.val(data.saleCount);
+		}
+		
+		function tableRowClickListener(e, row) {
+			isSave = false;
+			
+			if(isEditing == true) {
+				isSave = showEditConfirm();
+				
+				if(isSave == true) {
+					saveData();
+					isEditing = false;
+				}
+			}
+			
+			table.deselectRow();
+	 		table.selectRow(row.getData().id);
+	 		
+	 		selectedRowId = row.getData().id;
+	 		isSelected = true;
+	 		
+	 		addButton.removeClass('disabled');
+	 		deleteButton.removeClass('disabled');
+	 		setInputState(true);
+	 		
+	 		loadInputData(row.getData());
+		}
+		
+		function onChangeListener() {
+			isEditing = true;
+		}
+		
 		function addButtonListener() {
 			setInputState(true);
+			
+			addButton.addClass('disabled');
+			deleteButton.addClass('disabled');
 		}
 		
 		function deleteButtonListener() {
-			setInputState(false);
+			isDelete = showDeleteConfirm();
+			
+			if(isDelete == true) {
+				deleteData();
+				
+				selectedRowId = -1;
+				
+				setInputState(false);
+				table.deselectRow();
+				deleteButton.addClass('disabled');
+			}
 		}
 		
 		function saveButtonListener() {
 			setInputState(false);
-			save();
+			saveData();
+			
+			addButton.removeClass('disabled');
 		}
 		
 		function resetButtonListener() {
-			setInputState(true);
-			reset();
+			setInputState(false);
+			addButton.removeClass('disabled');
 		}
 		
 		function addItem() {
@@ -202,14 +260,25 @@
 			
 		}
 		
-		function save() {
-			
+		function saveData() {
+			addItem();
 		}
 		
-		function reset() {
-			inputForm.trigger('reset');
+		function deleteData(){
+			removeItem();
 		}
 		
+		function resetInput() {
+			inputForm.reset();
+		}
+		
+		function showEditConfirm() {
+			return confirm("변경된 행이 있습니다. 저장하시겠습니까?");
+		}
+		
+		function showDeleteConfirm() {
+			return confirm("선택된 행을 삭제하시겠습니까?");
+		}
 	</script>
 	
 </body>
