@@ -7,9 +7,9 @@ import java.sql.SQLException;
 public class DBConnector {
 	private static DBConnector instance = new DBConnector();
 	
-	private final String driver = "oracle.jdbc.driver.OracleDriver";
-	private final String url = "jdbc:oracle:thin:@114.70.93.123:1521:orcl";
-	private final String user = "root";
+	private final String driver = "com.mysql.cj.jdbc.Driver";
+	private final String url = "jdbc:mysql://114.70.93.123:11081/demand_prediction?serverTimezone=UTC&characterEncoding=utf8";
+	private final String user = "capstone";
 	private final String password = "zoqtmxhs";
 	
 	private Connection connection = null;
@@ -38,7 +38,7 @@ public class DBConnector {
 			
 		} catch (SQLException e) {
 			
-			System.out.println("오라클 데이터베이스 연결 실패");
+			System.out.println("데이터베이스 연결 실패");
 		}
 		
 		return connection;
