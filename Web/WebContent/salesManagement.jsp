@@ -25,7 +25,16 @@
 				    	판매 이력 관리
 				  	</div>
 				</h2>
+				
 				<div class="ui divider"></div>
+				
+				<h3 class="ui header left aligned">
+					<div class="content">
+						<i class="building outline icon"></i>
+						(주) 리우팩
+					</div>
+				</h3>
+				
 				
 				<div class ="ui segment" id="viewSegment">
 					<div class="ui grid">
@@ -34,7 +43,7 @@
 								<div class="ui form">
 									<div class="field">
 										<div class="ui action input">
-							  				<input type="text" name="prodCodeSearch" id="prodCodeSearchInput">
+							  				<input type="text" name="prodCodeSearch" id="prodCodeSearchInput" placeholder="상품코드">
 							  				<button class="ui blue button" id="prodCodeSearchButton">
 							    				조회
 							  				</button>

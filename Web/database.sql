@@ -7,8 +7,7 @@ use `demand_prediction`;
 -- ----------------------------------------------
 
 create table USER_TABLE (
-	`id`						integer auto_increment not null,
-    `user_id`					varchar(10) not null,
+    `user_id`					varchar(10) unique not null,
 	`company_name`				varchar(20) not null,
     `password`					varchar(20) not null,
     `email`						varchar(30),
@@ -16,7 +15,7 @@ create table USER_TABLE (
     `about`						varchar(200),
     `registered_date`			date not null,
     `user_level`				integer not null,
-    primary key(id)
+    primary key(user_id)
 ) default character set utf8mb4 collate utf8mb4_bin;
 
 
@@ -26,10 +25,13 @@ create table USER_TABLE (
 -- ----------------------------------------------
 
 create table SALES_TABLE (
+	`user_id`					varchar(10) unique not null,
 	`sale_date`					date not null,
     `prod_code`					varchar(10) not null,
     `prod_name`					varchar(20) not null,
-    `sale_count`				integer not null
+    `sale_count`				integer not null,
+    primary key(user_id, sale_date, prod_code),
+    foreign key (user_id) references USER_TABLE (user_id)
 ) default character set utf8mb4 collate utf8mb4_bin;
 
 
