@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.command.Command;
 
+import sale.SaleSearchCommand;
+
 @WebServlet("*.do")
 public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -39,7 +41,7 @@ public class Controller extends HttpServlet {
 		ForwardingAction forward = null;
 		
 		// command 객체 생성
-		Command command = null;
+		Command cmd = null;
 		
 		// URI 파싱
 		String uri = req.getRequestURI();
@@ -95,9 +97,16 @@ public class Controller extends HttpServlet {
 		
 		
 		// 판매이력 관련 페이지 및 기능
-		else if (page.equals("/salesManagement.do")) {
-			forward = new ForwardingAction(false, "salesManagement.jsp");
-		}
+		else if (page.equals("/saleManagement.do")) {
+			forward = new ForwardingAction(false, "saleManagement.jsp");
+			
+		} else if (page.equals("/saleSearchAction.do")) {
+			
+			cmd = new SaleSearchCommand();
+			
+			forward = cmd.execute(req, res);
+			
+		} 
 		
 		
 		
@@ -109,14 +118,16 @@ public class Controller extends HttpServlet {
 		============================================= */ 
 		
 		// 리다이렉트 ( 페이지 이동 )
-		if(forward.isRedirect()) {
-			res.sendRedirect(path + "/" + forward.getViewPage());
-		
+		if(forward.getViewPage() != null) {
+			if(forward.isRedirect()) {
+				res.sendRedirect(path + "/" + forward.getViewPage());
 			
-		// 포워딩 ( URL 은 그대로 두고, 내부 페이지만 이동 )
-		} else {
-			RequestDispatcher dispatcher = req.getRequestDispatcher(forward.getViewPage());
-			dispatcher.forward(req, res);
+				
+			// 포워딩 ( URL 은 그대로 두고, 내부 페이지만 이동 )
+			} else {
+				RequestDispatcher dispatcher = req.getRequestDispatcher(forward.getViewPage());
+				dispatcher.forward(req, res);
+			}
 		}
     }
 }

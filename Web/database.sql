@@ -8,8 +8,9 @@ use `demand_prediction`;
 
 create table USER_TABLE (
     `user_id`					varchar(10) unique not null,
-	`company_name`				varchar(20) not null,
+	`user_name`					varchar(20) not null,
     `password`					varchar(20) not null,
+    `company`					varchar(30) not null,
     `email`						varchar(30),
     `contact`					varchar(20) not null,
     `about`						varchar(200),
@@ -24,13 +25,14 @@ create table USER_TABLE (
 -- 판매 이력 테이블
 -- ----------------------------------------------
 
-create table SALES_TABLE (
-	`user_id`					varchar(10) unique not null,
+create table SALE_TABLE (
+	`sale_id`					integer auto_increment not null,
+	`user_id`					varchar(10) not null,
 	`sale_date`					date not null,
     `prod_code`					varchar(10) not null,
     `prod_name`					varchar(20) not null,
     `sale_count`				integer not null,
-    primary key(user_id, sale_date, prod_code),
+    primary key(sale_id),
     foreign key (user_id) references USER_TABLE (user_id)
 ) default character set utf8mb4 collate utf8mb4_bin;
 
@@ -43,7 +45,3 @@ create table SALES_TABLE (
 create table TEST (
 	test integer
 ) default character set utf8mb4 collate utf8mb4_bin;
-
-insert into TEST values(122);
-insert into TEST values(123);
-insert into TEST values(142);

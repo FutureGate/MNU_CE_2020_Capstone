@@ -4,7 +4,11 @@
 <html>
 <head>
 	<meta charset="UTF-8">
+	<%
+		String userID = "admin";
 	
+	
+	%>
 	<link href="./css/tabulator.css" rel="stylesheet">
 	
 	<title>수요 예측 모니터링 시스템 - 판매이력관리</title>
@@ -42,24 +46,22 @@
 							<div class="four wide left aligned column">
 								<div class="ui form">
 									<div class="field">
-										<div class="ui action input">
-							  				<input type="text" name="prodCodeSearch" id="prodCodeSearchInput" placeholder="상품코드">
-							  				<button class="ui blue button" id="prodCodeSearchButton">
-							    				조회
-							  				</button>
+						  				<div class="ui icon input">
+									  		<input type="text" name="search" id="searchInput" placeholder="상품코드">
+									  		<i class="inverted circular search link icon" id="searchButton"></i>
 										</div>
 									</div>
 								</div>
 							</div>
 							<div class="twelve wide right aligned column">
 								<div class="ui small basic icon buttons">
-							  		<button class="ui button" id="addButton"><i class="plus icon"></i></button>
+							  		<button class="ui button disabled" id="addButton"><i class="plus icon"></i></button>
 							 		<button class="ui button disabled" id="deleteButton"><i class="minus icon"></i></button>
 								</div>
 							</div>
 						</div>
 					</div>
-					<table class="ui selectable celled table" id="salesTable">
+					<table class="ui selectable celled table" id="saleTable">
 						
 					</table>
 				</div>
@@ -104,7 +106,11 @@
 
 
 	<script type="text/javascript" src="./js/tabulator.js"></script>
+	<script type="text/javascript" src="./js/moment-with-locales.js"></script>
 	<script>
+		var userID = '<%= userID %>';
+		var search = '';
+	
 		viewSegment = $('#viewSegment');
 		inputSegment = $('#inputSegment');
 		
@@ -112,11 +118,15 @@
 		deleteButton = $('#deleteButton');
 		saveButton = $('#saveButton');
 		resetButton = $('#resetButton');
+		searchButton = $('#searchButton');
 		
 		saleDateInput = $('#saleDateInput');
 		prodCodeInput = $('#prodCodeInput');
 		prodNameInput = $('#prodNameInput');
 		saleCountInput = $('#saleCountInput');
+		searchInput = $('#searchInput');
+		
+		viewSegment = $('#viewSegment');
 		
 		inputForm = $('#inputForm')[0];
 		
@@ -125,6 +135,9 @@
 		var isSelected = false;
 		var isEditing = false;
 		var selectedRowId = -1;
+		
+		var prodCode = '';
+		var prodName = '';
 		
 		$(document).ready(function() {
 		 	initialize();
@@ -135,14 +148,14 @@
 			setListener();
 			
 			initializeTable();
-			loadTableData();
 		}
 		
 		function initializeTable() {
-		 	table = new Tabulator("#salesTable", {
+		 	table = new Tabulator("#saleTable", {
 			 	height:205,
 			 	layout:"fitColumns",
 			 	columns:[
+			 		{title:"판매번호", field:"saleID"},
 				 	{title:"판매일", field:"saleDate", sorter:"date"},
 				 	{title:"상품코드", field:"prodCode"},
 				 	{title:"상품명", field:"prodName"},
@@ -160,6 +173,15 @@
 			deleteButton.click(deleteButtonListener);
 			saveButton.click(saveButtonListener);
 			resetButton.click(resetButtonListener);
+			searchButton.click(searchButtonListener);
+		}
+		
+		function setLoading(state) {
+			if(state == true) {
+				viewSegment.addClass('loading');
+			} else {
+				viewSegment.removeClass('loading');
+			}
 		}
 		
 		function setInputState(state) {
@@ -178,25 +200,6 @@
 				resetButton.addClass('disabled');
 				saveButton.addClass('disabled');
 			}
-		}
-		
-		function loadTableData(data) {
-			var tabledata = [
-			 	{id:1, saleDate:"2019-04-14", prodCode:"1521", prodName:"사과잼", saleCount:"1"},
-			 	{id:2, saleDate:"2019-04-15", prodCode:"1522", prodName:"포도잼", saleCount:"2"},
-			 	{id:3, saleDate:"2019-04-16", prodCode:"1523", prodName:"딸기잼", saleCount:"3"},
-			 	{id:4, saleDate:"2019-04-17", prodCode:"1524", prodName:"망고잼", saleCount:"1"},
-			 	{id:5, saleDate:"2019-04-18", prodCode:"1525", prodName:"꿀잼", saleCount:"1"},
-			 ];
-			
-			table.setData(tabledata);
-		}
-		
-		function loadInputData(data) {
-			saleDateInput.val(data.saleDate);
-			prodCodeInput.val(data.prodCode);
-			prodNameInput.val(data.prodName);
-			saleCountInput.val(data.saleCount);
 		}
 		
 		function tableRowClickListener(e, row) {
@@ -233,6 +236,13 @@
 			
 			addButton.addClass('disabled');
 			deleteButton.addClass('disabled');
+			
+			table.deselectRow();
+			
+			resetInput();
+			
+			prodCodeInput.val(prodCode);
+			prodNameInput.val(prodName);
 		}
 		
 		function deleteButtonListener() {
@@ -258,11 +268,62 @@
 		
 		function resetButtonListener() {
 			setInputState(false);
+			
+			table.deselectRow();
+			
+			deleteButton.addClass('disabled');
 			addButton.removeClass('disabled');
 		}
 		
-		function addItem() {
+		function searchButtonListener() {
+			search = searchInput.val();
 			
+			addButton.addClass('disabled');
+			deleteButton.addClass('disabled');
+			
+			resetTable();
+			loadTableData(search);
+		}
+		
+		function loadTableData(search) {
+			setLoading(true);
+			
+			$.ajax({
+				url: "saleSearchAction.do",
+				type: "POST",
+				data : {
+					userID: encodeURIComponent(userID),
+					prodCode: encodeURIComponent(search)
+				},
+				success: function(data) {
+					if(data == "") {
+						alert("해당 결과가 존재하지 않습니다.");
+						return;
+					}
+					
+					var jsonData = JSON.parse(data);
+					var result = jsonData.result;
+					
+					table.setData(result);
+					
+					prodCode = result[0].prodCode;
+					prodName = result[0].prodName;
+					
+					addButton.removeClass('disabled');
+				},
+				complete: function(data) {
+					setLoading(false);
+				}
+			});
+			
+			
+		}
+		
+		function loadInputData(data) {
+			saleDateInput.val(data.saleDate);
+			prodCodeInput.val(data.prodCode);
+			prodNameInput.val(data.prodName);
+			saleCountInput.val(data.saleCount);
 		}
 		
 		function removeItem(id) {
@@ -270,11 +331,17 @@
 		}
 		
 		function saveData() {
-			addItem();
+			
 		}
 		
 		function deleteData(){
-			removeItem();
+			removeItem(selectedRowId);
+		}
+		
+		function resetTable() {
+			table.clearData();
+			table.deselectRow();
+			table.clearSort();
 		}
 		
 		function resetInput() {
@@ -288,6 +355,7 @@
 		function showDeleteConfirm() {
 			return confirm("선택된 행을 삭제하시겠습니까?");
 		}
+		
 	</script>
 	
 </body>
