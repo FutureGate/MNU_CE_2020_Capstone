@@ -5,6 +5,26 @@
 <head>
 <meta charset="UTF-8">
 <title></title>
+
+<style type="text/css">
+
+body {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+body::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+}
+
+.no-scroll {
+	height:100%;
+	min-height:100%;
+	overflow:hidden !important;
+	touch-action:none;
+}
+
+</style>
+
 </head>
 <body>
 	<div class="ui inverted vertical footer segment" id="footerPage">

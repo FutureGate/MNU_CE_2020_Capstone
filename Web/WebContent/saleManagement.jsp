@@ -136,6 +136,7 @@
 		var isEditing = false;
 		var selectedRowId = -1;
 		
+		var saleID = 0;
 		var prodCode = '';
 		var prodName = '';
 		
@@ -147,6 +148,7 @@
 			setInputState(false);
 			setListener();
 			
+			scrollDisable();
 			initializeTable();
 		}
 		
@@ -217,6 +219,7 @@
 			table.deselectRow();
 	 		table.selectRow(row.getData().id);
 	 		
+	 		saleID = row.getData().saleID;
 	 		selectedRowId = row.getData().id;
 	 		isSelected = true;
 	 		
@@ -240,6 +243,7 @@
 			table.deselectRow();
 			
 			resetInput();
+			saleID = 0;
 			
 			prodCodeInput.val(prodCode);
 			prodNameInput.val(prodName);
@@ -251,8 +255,6 @@
 			if(isDelete == true) {
 				deleteData();
 				
-				selectedRowId = -1;
-				
 				setInputState(false);
 				table.deselectRow();
 				deleteButton.addClass('disabled');
@@ -260,8 +262,8 @@
 		}
 		
 		function saveButtonListener() {
-			setInputState(false);
 			saveData();
+			setInputState(false);
 			
 			addButton.removeClass('disabled');
 		}
@@ -327,15 +329,68 @@
 		}
 		
 		function removeItem(id) {
-			
+			table.deleteRow(id);
+			table.deselectRow();
 		}
 		
 		function saveData() {
 			
+			
+			var saleDate = saleDateInput.val();
+			
+			var saleCount = saleCountInput.val();
+			
+			setLoading(false);
+			
+			$.ajax({
+				url: "saleSaveAction.do",
+				type: "POST",
+				data : {
+					saleID : encodeURIComponent(saleID),
+					userID: encodeURIComponent(userID),
+					saleDate: encodeURIComponent(saleDate),
+					prodCode: encodeURIComponent(prodCode),
+					prodName: encodeURIComponent(prodName),
+					saleCount: encodeURIComponent(saleCount)
+				},
+				success: function(data) {
+					loadTableData(prodCode);
+					isEditing = false;
+					isSelected = false;
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+					alert("저장에 실패하였습니다.");
+				},
+				complete: function(data) {
+					
+				}
+			});
 		}
 		
 		function deleteData(){
-			removeItem(selectedRowId);
+			setLoading(true);			
+			
+			$.ajax({
+				url: "saleDeleteAction.do",
+				type: "POST",
+				data : {
+					saleID : encodeURIComponent(saleID),
+				},
+				success: function(data) {
+					removeItem(selectedRowId);
+					isEditing = false;
+					isSelected = false;
+					selectedRowId = -1;
+					
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+					alert("삭제에 실패하였습니다.");
+				},
+				complete: function(data) {
+					setLoading(false);	
+				}
+			});
+			
 		}
 		
 		function resetTable() {
@@ -354,6 +409,13 @@
 		
 		function showDeleteConfirm() {
 			return confirm("선택된 행을 삭제하시겠습니까?");
+		}
+		
+		function scrollDisable(){
+			$('html').addClass('no-scroll').on('scroll touchmove mousewheel', function(e){
+		        e.preventDefault();
+		    });
+		    $('html, body').addClass('no-scroll');
 		}
 		
 	</script>

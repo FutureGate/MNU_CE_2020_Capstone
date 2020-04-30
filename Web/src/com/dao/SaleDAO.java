@@ -16,7 +16,7 @@ public class SaleDAO {
 		
 	}
 	
-	public ArrayList<SaleDTO> getSalesList(String userID, String prodCode) {
+	public ArrayList<SaleDTO> getSaleList(String userID, String prodCode) {
 		ArrayList<SaleDTO> list = new ArrayList<SaleDTO>();
 		
 		String sql = "select * from sale_table where user_id = ? and prod_code = ? order by sale_date desc";
@@ -48,5 +48,57 @@ public class SaleDAO {
 		}
 		
 		return list;
+	}
+
+	public boolean add(String saleID, String userID, String saleDate, String prodCode, String prodName, String saleCount) {
+		
+		String sql = "insert into sale_table values (?, ?, ?, ?, ?, ?)";
+		
+		try {
+			conn = DBConnector.getInstance().getConnector();
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, saleID);
+			pstmt.setString(2, userID);
+			pstmt.setString(3, saleDate);
+			pstmt.setString(4, prodCode);
+			pstmt.setString(5, prodName);
+			pstmt.setString(6, saleCount);
+			
+			pstmt.executeUpdate();
+		
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+
+	public boolean delete(String saleID) {
+		String sql = "delete from sale_table where sale_id = ?";
+		
+		try {
+			conn = DBConnector.getInstance().getConnector();
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, saleID);
+			
+			pstmt.executeUpdate();
+		
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	
+	public void modify(String saleID, String userID, String saleDate, String prodCode, String prodName,
+			String saleCount) {
+		
+		delete(saleID);
+		add(saleID, userID, saleDate, prodCode, prodName, saleCount);
+		
 	}
 }

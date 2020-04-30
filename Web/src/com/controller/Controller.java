@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.command.Command;
 
+import sale.SaleDeleteCommand;
+import sale.SaleSaveCommand;
 import sale.SaleSearchCommand;
 
 @WebServlet("*.do")
@@ -103,6 +105,18 @@ public class Controller extends HttpServlet {
 		} else if (page.equals("/saleSearchAction.do")) {
 			
 			cmd = new SaleSearchCommand();
+			
+			forward = cmd.execute(req, res);
+			
+		} else if (page.equals("/saleSaveAction.do")) {
+			
+			cmd = new SaleSaveCommand();
+			
+			forward = cmd.execute(req, res);
+			
+		} else if (page.equals("/saleDeleteAction.do")) {
+			
+			cmd = new SaleDeleteCommand();
 			
 			forward = cmd.execute(req, res);
 			

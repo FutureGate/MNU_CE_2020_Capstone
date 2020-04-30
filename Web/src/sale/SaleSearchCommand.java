@@ -19,13 +19,16 @@ public class SaleSearchCommand implements Command {
 		// 변수 선언
 		boolean isRedirect = true;
 		String viewPage = null;
-		ArrayList<SaleDTO> salesList = null;
+		ArrayList<SaleDTO> saleList = null;
 		SaleDAO dao = new SaleDAO();
 		
-		// request 로부터 인자 받기
+		
+		// Request로부터 파라미터 받기
 		String userID = req.getParameter("userID");
 		String prodCode = req.getParameter("prodCode");
 		
+		
+	
 		// Validation (예외처리)
 		if(userID == null || userID.equals("") || prodCode == null || prodCode.equals("")) {
 			res.getWriter().write("");
@@ -38,10 +41,10 @@ public class SaleSearchCommand implements Command {
 				prodCode = URLDecoder.decode(prodCode, "UTF-8");
 				
 				// DAO 사용, 검색 실행
-				salesList = dao.getSalesList(userID, prodCode);
+				saleList = dao.getSaleList(userID, prodCode);
 				
 				// JSON 으로 변환
-				String json = convertToJson(salesList);
+				String json = convertToJson(saleList);
 				
 				res.getWriter().write(json);
 				
@@ -65,7 +68,9 @@ public class SaleSearchCommand implements Command {
 		if(list.size() == 0) return "";
 		
 		for(int i=0; i<list.size(); i++) {
-			result.append("{\"id\": \"" + i+1 + "\",");
+			int id = i+1;
+			
+			result.append("{\"id\": \"" + id + "\",");
 			result.append("\"saleID\": \"" + list.get(i).getSaleID() + "\",");
 			result.append("\"saleDate\": \"" + list.get(i).getSaleDate() + "\",");
 			result.append("\"prodCode\": \"" + list.get(i).getProdCode() + "\",");
