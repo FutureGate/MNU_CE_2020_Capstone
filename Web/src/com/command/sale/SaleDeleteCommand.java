@@ -1,4 +1,4 @@
-package sale;
+package com.command.sale;
 
 import java.io.IOException;
 import java.net.URLDecoder;

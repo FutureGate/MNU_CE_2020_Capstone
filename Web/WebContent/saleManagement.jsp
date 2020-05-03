@@ -10,8 +10,10 @@
 	
 	%>
 	<link href="./css/tabulator.css" rel="stylesheet">
+	<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
 	
-	<title>수요 예측 모니터링 시스템 - 판매이력관리</title>
+	<title>수요 모니터링 시스템 - 판매이력관리</title>
 </head>
 <body>
 	<jsp:include page="./fragment/topmenu.jsp"></jsp:include>

@@ -11,10 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.command.Command;
-
-import sale.SaleDeleteCommand;
-import sale.SaleSaveCommand;
-import sale.SaleSearchCommand;
+import com.command.sale.SaleDeleteCommand;
+import com.command.sale.SaleSaveCommand;
+import com.command.sale.SaleSearchCommand;
+import com.command.user.UserLoginCommand;
 
 @WebServlet("*.do")
 public class Controller extends HttpServlet {
@@ -69,13 +69,31 @@ public class Controller extends HttpServlet {
 		// 회원 관련 페이지 및 기능
 		else if (page.equals("/login.do")) {
 			forward = new ForwardingAction(false, "login.jsp");
-		} else if (page.equals("/loginAction.do")) {
 			
-		}
+		// 회원 로그인 처리 페이지
+		} else if (page.equals("/loginAction.do")) {
+			cmd = new UserLoginCommand();
+			
+			forward = cmd.execute(req, res);
+		} else if (page.equals("/logoutAction.do")) {
+			
+			req.getSession().removeAttribute("user");
+			
+			forward = new ForwardingAction(true, "login.do");
+
+			
+			
+			
+			
+		// 회원만 접근할 수 있도록 Private Routing. ( 이 아래로는 모두 회원 전용 페이지 )
+		} else if(req.getSession().getAttribute("user") == null) {
+			forward = new ForwardingAction(true, "login.do");
 		
-		
+			
+			
+			
 		// 모니터링 관련 페이지 및 기능
-		else if (page.equals("/productMonitoring.do")) {
+    	}else if (page.equals("/productMonitoring.do")) {
 			
 			// (임시)
 			forward = new ForwardingAction(false, "productMonitoring.jsp");

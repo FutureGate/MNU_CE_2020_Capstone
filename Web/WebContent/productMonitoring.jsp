@@ -1,11 +1,23 @@
+<%@page import="com.dto.UserDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>수요 예측 모니터링 시스템 - 제품 수요예측 모니터링</title>
+<title>수요 모니터링 시스템 - 제품 수요 모니터링</title>
+
+<%
+	UserDTO user = (UserDTO)request.getSession().getAttribute("user");
+
+	if(user == null) {
+		response.sendRedirect("login.do");
+	}
+%>
+
+
 </head>
+
 <body>
 	<jsp:include page="./fragment/topmenu.jsp"></jsp:include>
 

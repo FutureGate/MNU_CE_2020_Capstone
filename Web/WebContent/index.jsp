@@ -5,8 +5,11 @@
 <head>
 	<meta charset="UTF-8">
 	<title>수요 모니터링 시스템</title>
+	
+	<script type="text/javascript">
+		location.href = './login.do';
+	</script>
 </head>
 <body>
-	<a href="./login.do">로그인</a>
 </body>
 </html>

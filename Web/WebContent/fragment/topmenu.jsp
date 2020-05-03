@@ -1,3 +1,4 @@
+<%@page import="com.dto.UserDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -7,6 +8,10 @@
 
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+
+<%
+	UserDTO user = (UserDTO)request.getSession().getAttribute("user");
+%>
 
 </head>
 <body>
@@ -21,12 +26,14 @@
 
 		<div class="right menu">
 			<div class="ui simple dropdown item">
-
-				ㅇㅇ님 환영합니다. <i class="dropdown icon"></i>
+				
+				<% if(user != null) { %>
+					<%= user.getUserName() %>님 환영합니다. <i class="dropdown icon"></i>
+				<% } %>
 				<div class="menu">
 					<a class="item"><i class="user icon"></i> 회원정보 수정</a>
 					<div class="divider"></div>
-					<a class="item"><i class="sign-out icon"></i> 로그아웃</a>
+					<a class="item" href="logoutAction.do"><i class="sign-out icon"></i> 로그아웃</a>
 				</div>
 			</div>
 		</div>
