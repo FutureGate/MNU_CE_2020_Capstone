@@ -37,7 +37,7 @@
 				<h3 class="ui header left aligned">
 					<div class="content">
 						<i class="building outline icon"></i>
-						(주) 리우팩
+						(주) ㅇㅇ 회사
 					</div>
 				</h3>
 				

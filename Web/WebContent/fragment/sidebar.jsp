@@ -16,8 +16,8 @@
 
 	<div class="ui left vertical sidebar fixed menu" id="sidebar">
 		<br> <br> <br> <a class="item header"
-			href="./productMonitoring.do"> 제품별 수요예측 모니터링 </a> <a
-			class="item header" href="./productMonitoring.do"> 월별 수요예측 모니터링 </a>
+			href="./productMonitoring.do"> 제품별 수요 모니터링 </a> <a
+			class="item header" href="./productMonitoring.do"> 월별 수요 모니터링 </a>
 		<a class="item header" href="./productMonitoring.do"> 계절별 수요 모니터링
 		</a> <a class="item header" href="./productMonitoring.do"> 명절별 수요 모니터링
 		</a> <a class="item header" href="./productMonitoring.do"> 상품 관리 </a> <a
