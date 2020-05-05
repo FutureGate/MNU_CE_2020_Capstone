@@ -63,18 +63,16 @@ body>.grid {
 			</form>
 
 			<%
-				if(error != null) {
+				if (error != null) {
 			%>
-				<div class="ui red message">
-					<%= error %>
-					<br>
-					아이디/비밀번호 분실 시 관리자에게 문의하세요.
-				</div>
-			
+			<div class="ui red message">
+				<%=error%>
+				<br> 아이디/비밀번호 분실 시 관리자에게 문의하세요.
+			</div>
+
 			<%
-				
 				request.getSession().removeAttribute("error");
-			
+
 				}
 			%>
 		</div>
@@ -83,40 +81,9 @@ body>.grid {
 	<script type="text/javascript" src="./js/tabulator.js"></script>
 	<script type="text/javascript" src="./js/moment-with-locales.js"></script>
 	<script>
-		$(document)
-				.ready(
-						function() {
-							$('.ui.form')
-									.form(
-											{
-												fields : {
-													email : {
-														identifier : 'email',
-														rules : [
-																{
-																	type : 'empty',
-																	prompt : 'Please enter your e-mail'
-																},
-																{
-																	type : 'email',
-																	prompt : 'Please enter a valid e-mail'
-																} ]
-													},
-													password : {
-														identifier : 'password',
-														rules : [
-																{
-																	type : 'empty',
-																	prompt : 'Please enter your password'
-																},
-																{
-																	type : 'length[6]',
-																	prompt : 'Your password must be at least 6 characters'
-																} ]
-													}
-												}
-											});
-						});
+		$(document).ready(function() {
+
+		});
 	</script>
 </body>
 </html>
