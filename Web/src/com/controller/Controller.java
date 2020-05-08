@@ -99,6 +99,8 @@ public class Controller extends HttpServlet {
 			forward = new ForwardingAction(false, "productMonitoring.jsp");
 		} else if (page.equals("/monthlyMonitoring.do")) {
 			
+			// (임시)
+			forward = new ForwardingAction(false, "monthlyMonitoring.jsp");
 		} else if (page.equals("/seasonalMonitoring.do")) {
 			
 		} else if (page.equals("/byHolidayMonitoring.do")) {
@@ -109,6 +111,8 @@ public class Controller extends HttpServlet {
 		// 상품 관련 페이지 및 기능
 		else if (page.equals("/productView.do")) {
 			
+			// (임시)
+			forward = new ForwardingAction(false, "productView.jsp");
 		} else if (page.equals("/productManagement.do")) {
 			
 		} else if (page.equals("/productAddAction.do")) {

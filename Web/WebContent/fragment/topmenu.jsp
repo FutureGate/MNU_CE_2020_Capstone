@@ -21,7 +21,7 @@
 		</a>
 		
 		<a class="item header" href="./productMonitoring.do">
-			<span><i class="big home icon"></i> 드림테크</span>
+			<span><i class="big home icon"></i> 수요 모니터링 시스템</span>
 		</a>
 
 		<div class="right menu">

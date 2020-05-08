@@ -87,12 +87,12 @@
 							  	</div>
 							  	
 							  	<div class="extra content">
-						      		<div class="ui vertical animated fluid blue button" tabindex="0">
+						      		<a class="ui vertical animated fluid blue button" tabindex="0" href="./productView.do">
 								  		<div class="visible content">자세히 보기</div>
 								  		<div class="hidden content">
 								    		상품페이지로 이동
 								  		</div>
-									</div>
+									</a>
 							  	</div>
 							</div>
 						</div>

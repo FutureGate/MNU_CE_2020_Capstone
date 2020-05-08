@@ -15,13 +15,13 @@
 <body>
 
 	<div class="ui left vertical sidebar fixed menu" id="sidebar">
-		<br> <br> <br> <a class="item header"
-			href="./productMonitoring.do"> 제품별 수요 모니터링 </a> <a
-			class="item header" href="./productMonitoring.do"> 월별 수요 모니터링 </a>
-		<a class="item header" href="./productMonitoring.do"> 계절별 수요 모니터링
-		</a> <a class="item header" href="./productMonitoring.do"> 명절별 수요 모니터링
-		</a> <a class="item header" href="./productMonitoring.do"> 상품 관리 </a> <a
-			class="item header" href="./saleManagement.do"> 판매 이력 관리 </a>
+		<br> <br> <br>
+		<a class="item header" href="./productMonitoring.do"> 제품별 수요 모니터링 </a>
+		<a class="item header" href="./monthlyMonitoring.do"> 월별 수요 모니터링 </a>
+		<a class="item header" href="./monthlyMonitoring.do"> 계절별 수요 모니터링 </a>
+		<a class="item header" href="./productMonitoring.do"> 명절별 수요 모니터링 </a>
+		<a class="item header" href="./productMonitoring.do"> 상품 관리 </a>
+		<a class="item header" href="./saleManagement.do"> 판매 이력 관리 </a>
 	</div>
 
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
