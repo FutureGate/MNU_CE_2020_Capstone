@@ -11,3 +11,13 @@
 최정현<br>
 송보미<br>
 차승연<br>
+
+<br>
+<br>
+
+# 개발환경
+
+Forecasting : Tensorflow
+Database : MySQL
+Web : JSP
+
