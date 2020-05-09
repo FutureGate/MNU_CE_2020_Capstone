@@ -17,7 +17,7 @@
 
 # 개발환경
 
-Forecasting : Tensorflow
-Database : MySQL
-Web : JSP
+Forecasting : Python, Tensorflow 2.x
+Database : MySQL<br>
+Web : JSP<br>
 
