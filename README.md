@@ -1,23 +1,31 @@
-# MNU_CE_2020_Capstone_Design_Project
+# :mortar_board: MNU_CE_2020_Capstone_Design_Project
 2020 국립목포대학교 컴퓨터공학과 캡스톤 디자인 6조
 
-수요 예측 모니터링
+:eyes: 수요 예측 모니터링
+
+<br>
+<br>
+<br>
+
+# :keyboard: 개발자 ( Developer )
+<br>
+:man: 최정현<br>
+:woman: 송보미<br>
+:woman: 차승연<br>
 
 <br>
 <br>
 
-# 개발자 ( Developer )
-
-최정현<br>
-송보미<br>
-차승연<br>
-
+# :wrench: 개발환경
 <br>
-<br>
+### Forecasting
+Python<br>
+Tensorflow 2.x<br>
 
-# 개발환경
+### Database
+MySQL<br>
 
-Forecasting : Python, Tensorflow 2.x<br>
-Database : MySQL<br>
-Web : JSP<br>
+### Web
+Apache Tomcat 9.0<br>
+JSP
 
