@@ -18,14 +18,14 @@
 
 # :wrench: 개발환경
 
-### Forecasting
+### :chart: Forecasting
 Python<br>
 Tensorflow 2.x<br>
 
-### Database
+### :cloud: Database
 MySQL<br>
 
-### Web
+### :computer: Web
 Apache Tomcat 9.0<br>
 JSP
 
