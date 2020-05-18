@@ -19,7 +19,7 @@
 # :wrench: 개발환경
 <br>
 
-### :machine: Board
+### :rocket: Board
 <br>
 NVIDIA TX2
 
