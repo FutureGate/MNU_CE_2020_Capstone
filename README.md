@@ -19,6 +19,10 @@
 # :wrench: 개발환경
 <br>
 
+### :machine: Board
+<br>
+NVIDIA TX2
+
 ### :chart: Forecasting
 Python<br>
 Tensorflow 2.x<br>
