@@ -7,3 +7,4 @@ Forecasting/test/data/train_2016.csv
 Forecasting/test/data/oil.csv
 Forecasting/test/data/test.csv
 Forecasting/test/data/transactions.csv
+*.csv

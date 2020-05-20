@@ -3,7 +3,7 @@ scipy
 cython
 h5py
 Pillow
+PyMySQL
 scikit-image
 tensorflow-gpu==1.15.2
-keras==2.1.5
 jupyter
