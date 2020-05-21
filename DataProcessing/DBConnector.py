@@ -10,9 +10,15 @@ class DBConnector:
     charset = 'utf8'
 
     def __init__(self):
-        self.loadConfig()
+        self.load_config()
 
-    def loadConfig(self):
+    def __new__(cls):
+        if not hasattr(cls, 'instance'):
+            cls.instance = super(DBConnector, cls).__new__(cls)
+            print('!')
+        return cls.instance
+
+    def load_config(self):
         file = open("dbConfig.conf", "r")
 
         lines = file.readlines()
@@ -50,4 +56,5 @@ class DBConnector:
 
 dbconn = DBConnector()
 dbconn.connect()
+
 
