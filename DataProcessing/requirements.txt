@@ -2,8 +2,9 @@ numpy
 scipy
 cython
 h5py
-Pillow
+pandas
 PyMySQL
-scikit-image
+seaborn
+scikit-learn
 tensorflow-gpu==1.15.2
-jupyter
+cryptography

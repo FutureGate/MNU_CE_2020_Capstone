@@ -1,5 +1,6 @@
 import pymysql
 
+
 class DBConnector:
     db = None
     host = None
@@ -15,13 +16,14 @@ class DBConnector:
     def __new__(cls):
         if not hasattr(cls, 'instance'):
             cls.instance = super(DBConnector, cls).__new__(cls)
-            print('!')
         return cls.instance
 
     def load_config(self):
         file = open("dbConfig.conf", "r")
 
         lines = file.readlines()
+
+        print('connection information >>> ')
 
         for line in lines:
             line = line.split(sep='\n')[0]
@@ -30,10 +32,12 @@ class DBConnector:
             title = val[0]
             value = val[1]
 
+            print(title, ':', value)
+
             if title == 'host':
                 self.host = value
             elif title == 'port':
-                self.port = value
+                self.port = int(value)
             elif title == 'id':
                 self.id = value
             elif title == 'password':
@@ -44,7 +48,7 @@ class DBConnector:
         file.close()
 
     def connect(self):
-        db = pymysql.connect(
+        self.db = pymysql.connect(
             host=self.host,
             port=self.port,
             user=self.id,
@@ -53,8 +57,4 @@ class DBConnector:
             charset=self.charset
         )
 
-
-dbconn = DBConnector()
-dbconn.connect()
-
-
+        return self.db

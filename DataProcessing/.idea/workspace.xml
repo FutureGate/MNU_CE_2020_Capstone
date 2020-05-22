@@ -20,17 +20,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3de5fd16-d5a4-4966-87c4-fc891359a232" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/data_input.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/.ipynb_checkpoints/data_preprocessing_2016-checkpoint.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/train.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/DataProcessing.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/DataProcessing.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DBConnector.py" beforeDir="false" afterPath="$PROJECT_DIR$/DBConnector.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Forecasting/.idea/Forecasting.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Forecasting/.idea/libraries/R_User_Library.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Forecasting/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Forecasting/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Forecasting/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_input.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_insert.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dbConfig.conf" beforeDir="false" afterPath="$PROJECT_DIR$/dbConfig.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stat.py" beforeDir="false" afterPath="$PROJECT_DIR$/statistics.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/.ipynb_checkpoints/lstm-checkpoint.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/test/.ipynb_checkpoints/lstm-checkpoint.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/data_preprocessing_2016.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/test/data_preprocessing_2016.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/lstm.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/test/lstm.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/statistics.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/test/statistics.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Web/database.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Web/test_data.sql" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,12 +62,14 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.data_insert">
     <configuration name="DBConnector" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="DataProcessing" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -83,8 +91,30 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="data_insert" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="DataProcessing" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data_insert.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.data_insert" />
         <item itemvalue="Python.DBConnector" />
       </list>
     </recent_temporary>
@@ -102,50 +132,54 @@
     </task>
     <servers />
   </component>
-  <component name="TodoView">
-    <todo-panel id="selected-file">
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
-    <todo-panel id="all">
-      <are-packages-shown value="true" />
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
-  </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="1146" y="115" key="#DBConnector" timestamp="1590060976069">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="1146" y="115" key="#DBConnector/0.0.1920.1040@0.0.1920.1040" timestamp="1590060976069" />
-    <state width="936" height="281" key="GridCell.Tab.0.bottom" timestamp="1590061276001">
+    <state x="409" y="244" key="FileChooserDialogImpl" timestamp="1590062820419">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="936" height="281" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1590061276001" />
-    <state width="936" height="281" key="GridCell.Tab.0.center" timestamp="1590061276001">
+    <state x="409" y="244" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1590062820419" />
+    <state width="1100" height="138" key="GridCell.Tab.0.bottom" timestamp="1590130747252">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="936" height="281" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1590061276001" />
-    <state width="936" height="281" key="GridCell.Tab.0.left" timestamp="1590061276001">
+    <state width="1100" height="138" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1590130747252" />
+    <state width="1100" height="138" key="GridCell.Tab.0.center" timestamp="1590130747252">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="936" height="281" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1590061276001" />
-    <state width="936" height="281" key="GridCell.Tab.0.right" timestamp="1590061276001">
+    <state width="1100" height="138" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1590130747252" />
+    <state width="1100" height="138" key="GridCell.Tab.0.left" timestamp="1590130747252">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="936" height="281" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1590061276001" />
-    <state x="739" y="124" key="SettingsEditor" timestamp="1590061099052">
+    <state width="1100" height="138" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1590130747252" />
+    <state width="1100" height="138" key="GridCell.Tab.0.right" timestamp="1590130747252">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="739" y="124" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1590061099052" />
+    <state width="1100" height="138" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1590130747252" />
+    <state x="739" y="124" key="SettingsEditor" timestamp="1590062828726">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="739" y="124" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1590062828726" />
+    <state x="652" y="343" key="com.intellij.ide.util.TipDialog" timestamp="1590062253350">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="652" y="343" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1590062253350" />
   </component>
 </project>
