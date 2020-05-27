@@ -8,12 +8,11 @@ use `demand_prediction`;
 
 create table SHOP_TABLE (
 	`shop_id`					integer auto_increment not null,
+	`shop_name`					varchar(30),
     `contact`					varchar(40),
     `email`						varchar(40),
-	`about`						varchar(200),
     primary key(shop_id)
 ) default character set utf8mb4 collate utf8mb4_bin;
-
 
 
 
@@ -46,10 +45,6 @@ create table SALE_TABLE (
     `sale_count`				integer not null,
     primary key(sale_id)
 ) default character set utf8mb4 collate utf8mb4_bin;
-
-
-
-
 
 
 

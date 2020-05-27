@@ -34,10 +34,7 @@ public class UserDAO {
 				user.setUserID(rs.getString("user_id"));
 				user.setUserName(rs.getString("user_name"));
 				user.setPassword(rs.getString("password"));
-				user.setCompany(rs.getString("company"));
-				user.setEmail(rs.getString("email"));
-				user.setContact(rs.getString("contact"));
-				user.setAbout(rs.getString("about"));
+				user.setShopID(rs.getInt("shop_id"));
 				user.setRegisteredDate(rs.getString("registered_date"));
 				user.setUserLevel(rs.getInt("user_level"));
 				
