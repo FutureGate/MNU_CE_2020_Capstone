@@ -55,8 +55,6 @@ public class SaleSaveCommand implements Command {
 				
 				res.getWriter().write("");
 			}
-			
-			
 		}
 		
 		return new ForwardingAction(isRedirect, viewPage);

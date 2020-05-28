@@ -75,7 +75,7 @@
 						<div class="four fields">
       						<div class="field">
       							<label>판매일</label>
-        						<input type="date" name="saleDate" id="saleDateInput" onChange="onChangeListener();" >
+        						<input type="date" name="saleDate" id="saleDateInput" onChange="onChangeListener();"  required="required">
       						</div>
       						
       						<div class="field">
@@ -88,7 +88,7 @@
       						</div>
       						<div class="field">
       							<label>판매수량</label>
-       	 						<input type="number" name="saleCount" id="saleCountInput" placeholder="판매수량" onChange="onChangeListener();">
+       	 						<input type="number" name="saleCount" id="saleCountInput" placeholder="판매수량" onChange="onChangeListener();" required="required">
       						</div>
     					</div>
     					

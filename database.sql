@@ -59,7 +59,7 @@ create table ITEM_TABLE (
 	`item_name`					varchar(20) not null,
 	`shop_id`					integer not null,
     primary key(item_id),
-    foreign key (shop_id) references SHOP_TABLE (shop_id)
+    foreign key (shop_id) references SHOP_TABLE (shop_id) 
 ) default character set utf8mb4 collate utf8mb4_bin;
 
 

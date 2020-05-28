@@ -31,7 +31,7 @@
 					<%= user.getUserName() %>님 환영합니다. <i class="dropdown icon"></i>
 				<% } %>
 				<div class="menu">
-					<a class="item"><i class="user icon"></i> 회원정보 수정</a>
+					<a class="item" href="./userSetting.do"><i class="user icon"></i> 회원정보 수정</a>
 					<div class="divider"></div>
 					<a class="item" href="logoutAction.do"><i class="sign-out icon"></i> 로그아웃</a>
 				</div>

@@ -29,8 +29,6 @@ body>.grid {
 
 <%
 	String error = (String) request.getSession().getAttribute("error");
-
-	System.out.println(error);
 %>
 
 </head>

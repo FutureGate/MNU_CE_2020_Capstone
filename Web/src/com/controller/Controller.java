@@ -15,6 +15,10 @@ import com.command.sale.SaleDeleteCommand;
 import com.command.sale.SaleSaveCommand;
 import com.command.sale.SaleSearchCommand;
 import com.command.user.UserLoginCommand;
+import com.command.user.UserSettingShopSaveCommand;
+import com.command.user.UserSettingUserPasswordSaveCommand;
+import com.command.user.UserSettingUserSaveCommand;
+import com.dto.UserDTO;
 
 @WebServlet("*.do")
 public class Controller extends HttpServlet {
@@ -59,6 +63,7 @@ public class Controller extends HttpServlet {
 		
 		============================================= */ 
 		
+		UserDTO user = (UserDTO) req.getSession().getAttribute("user");
 		
 		// 단순 뷰
 		if(page.equals("/index.do")) {
@@ -66,7 +71,13 @@ public class Controller extends HttpServlet {
 		}
 		
 		
-		// 회원 관련 페이지 및 기능
+		/* ===========================================
+		
+		회원 관련 페이지 및 기능
+		
+		============================================= */ 
+		
+		// 로그인 페이지
 		else if (page.equals("/login.do")) {
 			forward = new ForwardingAction(false, "login.jsp");
 			
@@ -75,6 +86,8 @@ public class Controller extends HttpServlet {
 			cmd = new UserLoginCommand();
 			
 			forward = cmd.execute(req, res);
+		
+		// 로그아웃 페이지
 		} else if (page.equals("/logoutAction.do")) {
 			
 			req.getSession().removeAttribute("user");
@@ -82,15 +95,37 @@ public class Controller extends HttpServlet {
 			forward = new ForwardingAction(true, "login.do");
 
 			
-			
-			
-			
 		// 회원만 접근할 수 있도록 Private Routing. ( 이 아래로는 모두 회원 전용 페이지 )
-		} else if(req.getSession().getAttribute("user") == null) {
+		} else if(user == null || user.getUserID() == null) {
 			forward = new ForwardingAction(true, "login.do");
 		
+		// 회원 정보 수정 페이지
+		} else if (page.equals("/userSetting.do")) {
+			forward = new ForwardingAction(false, "userSetting.jsp");
 			
 			
+		// 회원 정보 수정 처리 페이지
+		} else if (page.equals("/userSettingUserSaveAction.do")) {
+			cmd = new UserSettingUserSaveCommand();
+			
+			forward = cmd.execute(req, res);
+			
+		// 비밀번호 수정 처리 페이지
+		} else if (page.equals("/userSettingUserPasswordSaveAction.do")) {
+			cmd = new UserSettingUserPasswordSaveCommand();
+			
+			forward = cmd.execute(req, res);
+						
+		// 판매점 정보 수정 페이지
+		} else if (page.equals("/userSettingShopSaveAction.do")) {
+			cmd = new UserSettingShopSaveCommand();
+			
+			forward = cmd.execute(req, res);
+		/* ===========================================
+		
+		모니터링 관련 페이지
+		
+		============================================= */ 	
 			
 		// 모니터링 관련 페이지 및 기능
     	}else if (page.equals("/productMonitoring.do")) {
@@ -113,6 +148,15 @@ public class Controller extends HttpServlet {
 			
 			// (임시)
 			forward = new ForwardingAction(false, "productView.jsp");
+		
+		
+		/* ===========================================
+		
+		상품 관리 페이지
+		
+		============================================= */ 
+		
+		// 상품 관리 페이지
 		} else if (page.equals("/productManagement.do")) {
 			
 		} else if (page.equals("/productAddAction.do")) {
@@ -120,22 +164,31 @@ public class Controller extends HttpServlet {
 		}
 		
 		
-		// 판매이력 관련 페이지 및 기능
+		
+		/* ===========================================
+		
+		판매 이력 관리 페이지 및 기능
+		
+		============================================= */ 
+		// 판매이력 관리 페이지
 		else if (page.equals("/saleManagement.do")) {
 			forward = new ForwardingAction(false, "saleManagement.jsp");
 			
+		// 판매이력 조회 기능
 		} else if (page.equals("/saleSearchAction.do")) {
 			
 			cmd = new SaleSearchCommand();
 			
 			forward = cmd.execute(req, res);
 			
+		// 판매이력 저장/수정 기능
 		} else if (page.equals("/saleSaveAction.do")) {
 			
 			cmd = new SaleSaveCommand();
 			
 			forward = cmd.execute(req, res);
-			
+		
+		// 판매이력 삭제 기능
 		} else if (page.equals("/saleDeleteAction.do")) {
 			
 			cmd = new SaleDeleteCommand();

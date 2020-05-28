@@ -47,6 +47,30 @@ public class UserDAO {
 		return user;
 	}
 	
+	public boolean userNameCheck(String userName) {
+		UserDTO user = null;
+		
+		String sql = "select * from USER_TABLE where user_name = ?";
+		
+		try {
+			conn = DBConnector.getInstance().getConnector();
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, userName);
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				return true;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	
 	public boolean login(String userID, String password) {
 		
 		try {
@@ -65,5 +89,70 @@ public class UserDAO {
 		}
 		
 		return false;
+	}
+
+	public boolean add(String userID, String userName, String password, String shopID, String registeredDate, String userLevel) {
+		
+		String sql = "insert into user_table values (?, ?, ?, ?, ?, ?)";
+		
+		try {
+			conn = DBConnector.getInstance().getConnector();
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, userID);
+			pstmt.setString(2, userName);
+			pstmt.setString(3, password);
+			pstmt.setString(4, shopID);
+			pstmt.setString(5, registeredDate);
+			pstmt.setString(6, userLevel);
+			
+			pstmt.executeUpdate();
+		
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	
+	public boolean delete(String userID) {
+		String sql = "delete from user_table where user_id = ?";
+		
+		try {
+			conn = DBConnector.getInstance().getConnector();
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, userID);
+			
+			pstmt.executeUpdate();
+		
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	
+	public boolean modify(String userID, String userName, String password, String shopID, String registeredDate, String userLevel) {
+		
+		String sql = "update user_table set user_name = ?, password = ? where user_id = ?";
+		
+		try {
+			conn = DBConnector.getInstance().getConnector();
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, userName);
+			pstmt.setString(2, password);
+			pstmt.setString(3, userID);
+			
+			pstmt.executeUpdate();
+		
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return true;
 	}
 }
