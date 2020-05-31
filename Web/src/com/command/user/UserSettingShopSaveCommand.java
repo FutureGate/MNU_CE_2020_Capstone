@@ -1,7 +1,6 @@
 package com.command.user;
 
 import java.io.IOException;
-import java.net.URLDecoder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,8 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.command.Command;
 import com.controller.ForwardingAction;
 import com.dao.ShopDAO;
-import com.dao.UserDAO;
-import com.dto.UserDTO;
+import com.dto.ShopDTO;
 
 public class UserSettingShopSaveCommand implements Command {
 
@@ -32,9 +30,12 @@ public class UserSettingShopSaveCommand implements Command {
 		try {
 
 			dao.modify(Integer.parseInt(shopID), shopName, contact, email);
-				
+			ShopDTO shop = dao.getShop(Integer.parseInt(shopID));
+			
 			message = "판매점 정보 수정이 완료 되었습니다.";
 
+			req.getSession().setAttribute("shop", shop);
+			
 		} catch (Exception e) {
 			res.getWriter().write("");
 		}

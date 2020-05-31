@@ -1,3 +1,5 @@
+<%@page import="com.dto.ShopDTO"%>
+<%@page import="com.dto.UserDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -5,9 +7,11 @@
 <head>
 	<meta charset="UTF-8">
 	<%
-		String userID = "admin";
-	
-	
+		UserDTO user = (UserDTO) request.getSession().getAttribute("user");
+		ShopDTO shop = (ShopDTO) request.getSession().getAttribute("shop");
+		
+		String userID = user.getUserID();
+
 	%>
 	<link href="./css/tabulator.css" rel="stylesheet">
 	<link rel="stylesheet"
@@ -37,7 +41,7 @@
 				<h3 class="ui header left aligned">
 					<div class="content">
 						<i class="building outline icon"></i>
-						(주) ㅇㅇ 회사
+						<%= shop.getShopName() %>
 					</div>
 				</h3>
 				

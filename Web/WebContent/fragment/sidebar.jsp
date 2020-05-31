@@ -21,7 +21,8 @@
 		<a class="item header" href="./monthlyMonitoring.do"> 계절별 수요 모니터링 </a>
 		<a class="item header" href="./productMonitoring.do"> 명절별 수요 모니터링 </a>
 		<a class="item header" href="./productMonitoring.do"> 상품 관리 </a>
-		<a class="item header" href="./saleManagement.do"> 판매 이력 관리 </a>
+		<a class="item header" href="./saleManagement.do"> 판매 이력 관리 (수동)</a>
+		<a class="item header" href="./saleManagementAuto.do"> 판매 이력 관리 (자동)</a>
 	</div>
 
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>

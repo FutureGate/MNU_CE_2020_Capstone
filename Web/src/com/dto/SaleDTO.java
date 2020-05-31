@@ -2,23 +2,21 @@ package com.dto;
 
 public class SaleDTO {
 	private int saleID;
-	private String userID;
 	private String saleDate;
-	private String prodCode;
-	private String prodName;
+	private int shopID;
+	private int itemID;
 	private int saleCount;
 	
 	public SaleDTO() {
 		super();
 	}
 
-	public SaleDTO(int saleID, String userID, String saleDate, String prodCode, String prodName, int saleCount) {
+	public SaleDTO(int saleID, String saleDate, int shopID, int itemID, int saleCount) {
 		super();
 		this.saleID = saleID;
-		this.userID = userID;
 		this.saleDate = saleDate;
-		this.prodCode = prodCode;
-		this.prodName = prodName;
+		this.shopID = shopID;
+		this.itemID = itemID;
 		this.saleCount = saleCount;
 	}
 
@@ -30,14 +28,6 @@ public class SaleDTO {
 		this.saleID = saleID;
 	}
 
-	public String getUserID() {
-		return userID;
-	}
-
-	public void setUserID(String userID) {
-		this.userID = userID;
-	}
-
 	public String getSaleDate() {
 		return saleDate;
 	}
@@ -46,20 +36,20 @@ public class SaleDTO {
 		this.saleDate = saleDate;
 	}
 
-	public String getProdCode() {
-		return prodCode;
+	public int getShopID() {
+		return shopID;
 	}
 
-	public void setProdCode(String prodCode) {
-		this.prodCode = prodCode;
+	public void setShopID(int shopID) {
+		this.shopID = shopID;
 	}
 
-	public String getProdName() {
-		return prodName;
+	public int getItemID() {
+		return itemID;
 	}
 
-	public void setProdName(String prodName) {
-		this.prodName = prodName;
+	public void setItemID(int itemID) {
+		this.itemID = itemID;
 	}
 
 	public int getSaleCount() {
@@ -69,7 +59,5 @@ public class SaleDTO {
 	public void setSaleCount(int saleCount) {
 		this.saleCount = saleCount;
 	}
-	
-	
 	
 }

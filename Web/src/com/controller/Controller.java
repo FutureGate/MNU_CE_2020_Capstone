@@ -12,8 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.command.Command;
 import com.command.sale.SaleDeleteCommand;
+import com.command.sale.SaleDownloadCommand;
 import com.command.sale.SaleSaveCommand;
 import com.command.sale.SaleSearchCommand;
+import com.command.sale.SaleUploadCommand;
 import com.command.user.UserLoginCommand;
 import com.command.user.UserSettingShopSaveCommand;
 import com.command.user.UserSettingUserPasswordSaveCommand;
@@ -170,7 +172,7 @@ public class Controller extends HttpServlet {
 		판매 이력 관리 페이지 및 기능
 		
 		============================================= */ 
-		// 판매이력 관리 페이지
+		// 판매이력 관리 (수동)
 		else if (page.equals("/saleManagement.do")) {
 			forward = new ForwardingAction(false, "saleManagement.jsp");
 			
@@ -194,9 +196,22 @@ public class Controller extends HttpServlet {
 			cmd = new SaleDeleteCommand();
 			
 			forward = cmd.execute(req, res);
-			
-		} 
 		
+		// 판매이력 관리 (자동)
+		} else if (page.equals("/saleManagementAuto.do")) {
+			
+			// 임시
+			forward = new ForwardingAction(false, "saleManagementAuto.jsp");
+			
+		} else if (page.equals("/saleManagementUpload.do")) {
+			cmd = new SaleUploadCommand();
+			
+			forward = cmd.execute(req, res);
+		} else if (page.equals("/saleManagementDownload.do")) {
+			cmd = new SaleDownloadCommand();
+			
+			forward = cmd.execute(req, res);
+		}
 		
 		
 		

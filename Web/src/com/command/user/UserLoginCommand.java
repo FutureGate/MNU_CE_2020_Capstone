@@ -7,7 +7,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.command.Command;
 import com.controller.ForwardingAction;
+import com.dao.ShopDAO;
 import com.dao.UserDAO;
+import com.dto.ShopDTO;
 import com.dto.UserDTO;
 
 public class UserLoginCommand implements Command {
@@ -19,6 +21,7 @@ public class UserLoginCommand implements Command {
 		String error = null;
 		
 		UserDAO dao = new UserDAO();
+		ShopDAO shopDAO = new ShopDAO();
 		
 		String userID = req.getParameter("userID");
 		String password = req.getParameter("password");
@@ -29,8 +32,10 @@ public class UserLoginCommand implements Command {
 				viewPage = "productMonitoring.do";
 				
 				UserDTO user = dao.getUser(userID);
+				ShopDTO shop = shopDAO.getShop(user.getShopID());
 				
 				req.getSession().setAttribute("user", user);
+				req.getSession().setAttribute("shop", shop);
 			} else {
 				viewPage = "login.do";
 				error = "아이디 혹은 비밀번호가 일치하지 않습니다.";

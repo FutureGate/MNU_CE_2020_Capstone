@@ -66,6 +66,22 @@ create table ITEM_TABLE (
 
 
 -- ----------------------------------------------
+-- 파일 테이블
+-- ----------------------------------------------
+
+create table FILE_TABLE (
+	`file_id`					integer auto_increment not null,
+    `file_name`					varchar(256),
+    `user_id`					varchar(10) not null,
+    `upload_date`				date,
+    `state`						varchar(20),
+    primary key(file_id),
+    foreign key (user_id) references USER_TABLE (user_id)
+) default character set utf8mb4 collate utf8mb4_bin;
+
+
+
+-- ----------------------------------------------
 -- 테스트 테이블
 -- ----------------------------------------------
 
