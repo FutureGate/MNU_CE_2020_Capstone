@@ -20,17 +20,24 @@
 <br>
 
 ### :rocket: Board
+NVIDIA TX2<br>
+
 <br>
-NVIDIA TX2
 
 ### :chart: Forecasting
 Python<br>
 Tensorflow 2.x<br>
 
+<br>
+
 ### :cloud: Database
 MySQL<br>
+
+<br>
 
 ### :computer: Web
 Apache Tomcat 9.0<br>
 JSP
+
+<br>
 
