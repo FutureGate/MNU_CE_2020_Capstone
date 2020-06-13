@@ -29,7 +29,7 @@ public class UserLoginCommand implements Command {
 		try {
 			
 			if(dao.login(userID, password)) {
-				viewPage = "productMonitoring.do";
+				viewPage = "goHome.do";
 				
 				UserDTO user = dao.getUser(userID);
 				ShopDTO shop = shopDAO.getShop(user.getShopID());

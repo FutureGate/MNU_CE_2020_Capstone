@@ -20,7 +20,7 @@
 			<i class="sidebar icon"></i>
 		</a>
 		
-		<a class="item header" href="./productMonitoring.do">
+		<a class="item header" href="/goHome.do">
 			<span><i class="big home icon"></i> 수요 모니터링 시스템</span>
 		</a>
 

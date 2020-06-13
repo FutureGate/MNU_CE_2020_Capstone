@@ -16,11 +16,11 @@
 
 	<div class="ui left vertical sidebar fixed menu" id="sidebar">
 		<br> <br> <br>
-		<a class="item header" href="./productMonitoring.do"> 제품별 수요 모니터링 </a>
-		<a class="item header" href="./monthlyMonitoring.do"> 월별 수요 모니터링 </a>
-		<a class="item header" href="./monthlyMonitoring.do"> 계절별 수요 모니터링 </a>
-		<a class="item header" href="./productMonitoring.do"> 명절별 수요 모니터링 </a>
-		<a class="item header" href="./productMonitoring.do"> 상품 관리 </a>
+		<a class="item header" href="./monitoringItem.do"> 제품별 수요 모니터링 </a>
+		<a class="item header" href="./monitoringMonthly.do"> 월별 수요 모니터링 </a>
+		<a class="item header" href="#"> 계절별 수요 모니터링 </a>
+		<a class="item header" href="#"> 명절별 수요 모니터링 </a>
+		<a class="item header" href="./itemManagement.do"> 상품 관리 </a>
 		<a class="item header" href="./saleManagement.do"> 판매 이력 관리 (수동)</a>
 		<a class="item header" href="./saleManagementAuto.do"> 판매 이력 관리 (자동)</a>
 	</div>

@@ -73,8 +73,6 @@ public class SaleSearchCommand implements Command {
 			result.append("{\"id\": \"" + id + "\",");
 			result.append("\"saleID\": \"" + list.get(i).getSaleID() + "\",");
 			result.append("\"saleDate\": \"" + list.get(i).getSaleDate() + "\",");
-			result.append("\"prodCode\": \"" + list.get(i).getProdCode() + "\",");
-			result.append("\"prodName\": \"" + list.get(i).getProdName() + "\",");
 			result.append("\"saleCount\": \"" + list.get(i).getSaleCount() + "\"}");
 			
 			if(i != list.size() -1) result.append(",");

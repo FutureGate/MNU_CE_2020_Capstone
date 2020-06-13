@@ -34,10 +34,7 @@ public class SaleDAO {
 				SaleDTO sale = new SaleDTO();
 				
 				sale.setSaleID(rs.getInt("sale_id"));
-				sale.setUserID(rs.getString("user_id"));
 				sale.setSaleDate(rs.getString("sale_date"));
-				sale.setProdCode(rs.getString("prod_code"));
-				sale.setProdName(rs.getString("prod_name"));
 				sale.setSaleCount(rs.getInt("sale_count"));
 				
 				list.add(sale);

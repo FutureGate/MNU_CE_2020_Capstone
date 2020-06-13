@@ -97,10 +97,14 @@ public class Controller extends HttpServlet {
 			forward = new ForwardingAction(true, "login.do");
 
 			
-		// 회원만 접근할 수 있도록 Private Routing. ( 이 아래로는 모두 회원 전용 페이지 )
+		// 회원만 접근할 수 있도록 Private Routing. ( 이 아래로는 모두 회원 전용 페이지 ) =============================================================
 		} else if(user == null || user.getUserID() == null) {
 			forward = new ForwardingAction(true, "login.do");
 		
+		// 메인 페이지로 가도록 하는 페이지
+		} else if(page.equals("/goHome.do")) {
+			forward = new ForwardingAction(true, "monitoringItem.do");
+	
 		// 회원 정보 수정 페이지
 		} else if (page.equals("/userSetting.do")) {
 			forward = new ForwardingAction(false, "userSetting.jsp");
@@ -130,26 +134,26 @@ public class Controller extends HttpServlet {
 		============================================= */ 	
 			
 		// 모니터링 관련 페이지 및 기능
-    	}else if (page.equals("/productMonitoring.do")) {
+    	}else if (page.equals("/monitoringItem.do")) {
 			
 			// (임시)
-			forward = new ForwardingAction(false, "productMonitoring.jsp");
-		} else if (page.equals("/monthlyMonitoring.do")) {
+			forward = new ForwardingAction(false, "monitoringItem.jsp");
+		} else if (page.equals("/monitoringMonthly.do")) {
 			
 			// (임시)
-			forward = new ForwardingAction(false, "monthlyMonitoring.jsp");
-		} else if (page.equals("/seasonalMonitoring.do")) {
+			forward = new ForwardingAction(false, "monitoringMonthly.jsp");
+		} else if (page.equals("/monitoringSeasonal.do")) {
 			
-		} else if (page.equals("/byHolidayMonitoring.do")) {
+		} else if (page.equals("/monitoringHoliday.do")) {
 			
 		}
 		
 		
 		// 상품 관련 페이지 및 기능
-		else if (page.equals("/productView.do")) {
+		else if (page.equals("/itemView.do")) {
 			
 			// (임시)
-			forward = new ForwardingAction(false, "productView.jsp");
+			forward = new ForwardingAction(false, "itemView.jsp");
 		
 		
 		/* ===========================================
@@ -159,9 +163,9 @@ public class Controller extends HttpServlet {
 		============================================= */ 
 		
 		// 상품 관리 페이지
-		} else if (page.equals("/productManagement.do")) {
-			
-		} else if (page.equals("/productAddAction.do")) {
+		} else if (page.equals("/itemManagement.do")) {
+			forward = new ForwardingAction(false, "itemManagement.jsp");
+		} else if (page.equals("/itemAddAction.do")) {
 			
 		}
 		
