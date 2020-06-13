@@ -47,6 +47,42 @@ public class ItemDAO {
 		return list;
 	}
 
+	public ArrayList<ItemDTO> getItemListByItemName(int shopID, String itemName) {
+		ArrayList<ItemDTO> list = new ArrayList<ItemDTO>();
+		
+		System.out.println(shopID);
+		System.out.println(itemName);
+		
+		String sql = "select * from item_table where shop_id = ? and item_name like ?";
+		
+		try {
+			conn = DBConnector.getInstance().getConnector();
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, shopID);
+			pstmt.setString(2, itemName);
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				System.out.println("!!");
+				
+				ItemDTO item = new ItemDTO();
+				
+				item.setItemID(rs.getInt("item_id"));
+				item.setItemName(rs.getString("item_name"));
+				item.setShopID(rs.getInt("shop_id"));
+				
+				list.add(item);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+	
 	public boolean add(int item_id, String itemName, int shop_id) {
 		
 		String sql = "insert into item_table values (?, ?, ?)";
@@ -88,10 +124,27 @@ public class ItemDAO {
 		return false;
 	}
 	
-	public void modify(int itemID, String itemName) {
+	public boolean modify(int itemID, String itemName) {
 		
-		delete(saleID);
-		add(saleID, userID, saleDate, prodCode, prodName, saleCount);
+		String sql = "update item_table set item_name = ? where shop_id = ?";
+		
+		try {
+			conn = DBConnector.getInstance().getConnector();
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, itemID);
+			pstmt.setString(2, itemName);
+			
+			pstmt.executeUpdate();
+		
+			return true;
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return false;
 		
 	}
 }

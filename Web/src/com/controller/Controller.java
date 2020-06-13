@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.command.Command;
+import com.command.item.ItemSearchCommand;
 import com.command.sale.SaleDeleteCommand;
 import com.command.sale.SaleDownloadCommand;
 import com.command.sale.SaleSaveCommand;
@@ -103,7 +104,7 @@ public class Controller extends HttpServlet {
 		
 		// 메인 페이지로 가도록 하는 페이지
 		} else if(page.equals("/goHome.do")) {
-			forward = new ForwardingAction(true, "monitoringItem.do");
+			forward = new ForwardingAction(true, "itemManagement.do");
 	
 		// 회원 정보 수정 페이지
 		} else if (page.equals("/userSetting.do")) {
@@ -165,6 +166,15 @@ public class Controller extends HttpServlet {
 		// 상품 관리 페이지
 		} else if (page.equals("/itemManagement.do")) {
 			forward = new ForwardingAction(false, "itemManagement.jsp");
+			
+			
+		// 상품 조회 기능
+		} else if (page.equals("/itemSearchAction.do")) {
+
+			cmd = new ItemSearchCommand();
+			
+			forward = cmd.execute(req, res);
+			
 		} else if (page.equals("/itemAddAction.do")) {
 			
 		}

@@ -11,13 +11,14 @@
 		ShopDTO shop = (ShopDTO) request.getSession().getAttribute("shop");
 		
 		String userID = user.getUserID();
-
+		int shopID = shop.getShopID();
+		
 	%>
 	<link href="./css/tabulator.css" rel="stylesheet">
 	<link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
 	
-	<title>수요 모니터링 시스템 - 판매이력관리</title>
+	<title>수요 모니터링 시스템 - 상품정보관리</title>
 </head>
 <body>
 	<jsp:include page="./fragment/topmenu.jsp"></jsp:include>
@@ -32,7 +33,7 @@
 				<h2 class="ui header">
 					<i class="file alternate outline icon"></i>
 					<div class="content">
-				    	판매 이력 관리
+				    	상품 정보 관리
 				  	</div>
 				</h2>
 				
@@ -53,7 +54,7 @@
 								<div class="ui form">
 									<div class="field">
 						  				<div class="ui icon input">
-									  		<input type="text" name="search" id="searchInput" placeholder="상품코드">
+									  		<input type="text" name="search" id="searchInput" placeholder="상품 이름">
 									  		<i class="inverted circular search link icon" id="searchButton"></i>
 										</div>
 									</div>
@@ -67,7 +68,7 @@
 							</div>
 						</div>
 					</div>
-					<table class="ui selectable celled table" id="saleTable">
+					<table class="ui selectable celled table" id="itemTable">
 						
 					</table>
 				</div>
@@ -76,23 +77,15 @@
 		
 				<div class="ui left aligned segment" id="inputSegment">
 					<form class="ui form" id="inputForm">
-						<div class="four fields">
+						<div class="two fields">
       						<div class="field">
-      							<label>판매일</label>
-        						<input type="date" name="saleDate" id="saleDateInput" onChange="onChangeListener();"  required="required">
+      							<label>상품 번호</label>
+        						<input type="text" name="itemID" id="itemIDInput" onChange="onChangeListener();"  required="required">
       						</div>
       						
       						<div class="field">
-      							<label>상품코드</label>
-       	 						<input type="text" name="prodCode" id="prodCodeInput" placeholder="상품코드" onChange="onChangeListener();" disabled>
-      						</div>
-      						<div class="field">
-      							<label>상품명</label>
-       	 						<input type="text" name="prodName" id="prodNameInput" placeholder="상품명" onChange="onChangeListener();" disabled>
-      						</div>
-      						<div class="field">
-      							<label>판매수량</label>
-       	 						<input type="number" name="saleCount" id="saleCountInput" placeholder="판매수량" onChange="onChangeListener();" required="required">
+      							<label>상품 이름</label>
+       	 						<input type="text" name="itemName" id="itemNameInput" placeholder="상품 이름" onChange="onChangeListener();" disabled>
       						</div>
     					</div>
     					
@@ -115,6 +108,7 @@
 	<script type="text/javascript" src="./js/moment-with-locales.js"></script>
 	<script>
 		var userID = '<%= userID %>';
+		var shopID = '<%= shopID %>';
 		var search = '';
 	
 		viewSegment = $('#viewSegment');
@@ -126,10 +120,9 @@
 		resetButton = $('#resetButton');
 		searchButton = $('#searchButton');
 		
-		saleDateInput = $('#saleDateInput');
-		prodCodeInput = $('#prodCodeInput');
-		prodNameInput = $('#prodNameInput');
-		saleCountInput = $('#saleCountInput');
+		itemIDInput = $('#itemIDInput');
+		itemNameInput = $('#itemNameInput');
+		
 		searchInput = $('#searchInput');
 		
 		viewSegment = $('#viewSegment');
@@ -142,9 +135,8 @@
 		var isEditing = false;
 		var selectedRowId = -1;
 		
-		var saleID = 0;
-		var prodCode = '';
-		var prodName = '';
+		var itemID = 0;
+		var itemName = '';
 		
 		$(document).ready(function() {
 		 	initialize();
@@ -159,15 +151,12 @@
 		}
 		
 		function initializeTable() {
-		 	table = new Tabulator("#saleTable", {
+		 	table = new Tabulator("#itemTable", {
 			 	height:205,
 			 	layout:"fitColumns",
 			 	columns:[
-			 		{title:"판매번호", field:"saleID"},
-				 	{title:"판매일", field:"saleDate", sorter:"date"},
-				 	{title:"상품코드", field:"prodCode"},
-				 	{title:"상품명", field:"prodName"},
-				 	{title:"판매수량", field:"saleCount"},
+			 		{title:"상품 번호", field:"itemID"},
+				 	{title:"상품 이름", field:"itemName"}
 			 	],
 			 	
 			 	rowClick:function(e, row){
@@ -195,16 +184,14 @@
 		function setInputState(state) {
 			if(state == true) {
 				inputSegment.removeClass('disabled');
-				saleDateInput.attr('disabled', false);
-				saleCountInput.attr('disabled', false);
+				itemNameInput.attr('disabled', false);
 				resetButton.removeClass('disabled');
 				saveButton.removeClass('disabled');
 			} else {
 				resetInput();
 				
 				inputSegment.addClass('disabled');
-				saleDateInput.attr('disabled', true);
-				saleCountInput.attr('disabled', true);
+				itemNameInput.attr('disabled', true);
 				resetButton.addClass('disabled');
 				saveButton.addClass('disabled');
 			}
@@ -225,7 +212,7 @@
 			table.deselectRow();
 	 		table.selectRow(row.getData().id);
 	 		
-	 		saleID = row.getData().saleID;
+	 		itemID = row.getData().itemID;
 	 		selectedRowId = row.getData().id;
 	 		isSelected = true;
 	 		
@@ -249,10 +236,10 @@
 			table.deselectRow();
 			
 			resetInput();
-			saleID = 0;
+			itemID = 0;
 			
-			prodCodeInput.val(prodCode);
-			prodNameInput.val(prodName);
+			itemIDInput.val(itemID);
+			itemNameInput.val(itemName);
 		}
 		
 		function deleteButtonListener() {
@@ -293,17 +280,20 @@
 			loadTableData(search);
 		}
 		
-		function loadTableData(search) {
+		function loadTableData(itemName) {
 			setLoading(true);
 			
 			$.ajax({
-				url: "saleSearchAction.do",
+				url: "itemSearchAction.do",
 				type: "POST",
 				data : {
-					userID: encodeURIComponent(userID),
-					prodCode: encodeURIComponent(search)
+					shopID: encodeURIComponent(shopID),
+					itemID: encodeURIComponent(itemID),
+					itemName: encodeURIComponent(itemName)
 				},
 				success: function(data) {
+					console.log(data);
+					
 					if(data == "") {
 						alert("해당 결과가 존재하지 않습니다.");
 						return;
@@ -312,10 +302,12 @@
 					var jsonData = JSON.parse(data);
 					var result = jsonData.result;
 					
+					console.log(result);
+					
 					table.setData(result);
 					
-					prodCode = result[0].prodCode;
-					prodName = result[0].prodName;
+					itemID = result[0].itemID;
+					itemName = result[0].itemName;
 					
 					addButton.removeClass('disabled');
 				},
@@ -328,8 +320,8 @@
 		}
 		
 		function loadInputData(data) {
-			saleDateInput.val(data.saleDate);
-			prodCodeInput.val(data.prodCode);
+			itemIDInput.val(data.saleDate);
+			itemNameInput.val(data.itemID);
 			prodNameInput.val(data.prodName);
 			saleCountInput.val(data.saleCount);
 		}
@@ -342,7 +334,7 @@
 		function saveData() {
 			
 			
-			var saleDate = saleDateInput.val();
+			var saleDate = itemIDInput.val();
 			
 			var saleCount = saleCountInput.val();
 			
@@ -355,12 +347,12 @@
 					saleID : encodeURIComponent(saleID),
 					userID: encodeURIComponent(userID),
 					saleDate: encodeURIComponent(saleDate),
-					prodCode: encodeURIComponent(prodCode),
+					itemID: encodeURIComponent(itemID),
 					prodName: encodeURIComponent(prodName),
 					saleCount: encodeURIComponent(saleCount)
 				},
 				success: function(data) {
-					loadTableData(prodCode);
+					loadTableData(itemID);
 					isEditing = false;
 					isSelected = false;
 				},
