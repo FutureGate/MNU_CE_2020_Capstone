@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.command.Command;
+import com.command.item.ItemDeleteCommand;
+import com.command.item.ItemSaveCommand;
 import com.command.item.ItemSearchCommand;
 import com.command.sale.SaleDeleteCommand;
 import com.command.sale.SaleDownloadCommand;
@@ -104,7 +106,7 @@ public class Controller extends HttpServlet {
 		
 		// 메인 페이지로 가도록 하는 페이지
 		} else if(page.equals("/goHome.do")) {
-			forward = new ForwardingAction(true, "itemManagement.do");
+			forward = new ForwardingAction(true, "saleManagement.do");
 	
 		// 회원 정보 수정 페이지
 		} else if (page.equals("/userSetting.do")) {
@@ -175,10 +177,18 @@ public class Controller extends HttpServlet {
 			
 			forward = cmd.execute(req, res);
 			
-		} else if (page.equals("/itemAddAction.do")) {
+		} else if (page.equals("/itemSaveAction.do")) {
 			
+			cmd = new ItemSaveCommand();
+			
+			forward = cmd.execute(req, res);
+			
+		}  else if (page.equals("/itemDeleteAction.do")) {
+			
+			cmd = new ItemDeleteCommand();
+			
+			forward = cmd.execute(req, res);
 		}
-		
 		
 		
 		/* ===========================================

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.command.Command;
 import com.controller.ForwardingAction;
+import com.dao.ItemDAO;
 import com.dao.SaleDAO;
 import com.dto.SaleDTO;
 
@@ -24,24 +25,35 @@ public class SaleSearchCommand implements Command {
 		
 		
 		// Request로부터 파라미터 받기
-		String userID = req.getParameter("userID");
-		String prodCode = req.getParameter("prodCode");
+		String shopID = req.getParameter("shopID");
+		String itemName = req.getParameter("itemName");
 		
-		
-	
 		// Validation (예외처리)
-		if(userID == null || userID.equals("") || prodCode == null || prodCode.equals("")) {
+		if(shopID == null || shopID.equals("")) {
 			res.getWriter().write("");
 			
 		} else {
 			
 			
 			try {
-				userID = URLDecoder.decode(userID, "UTF-8");
-				prodCode = URLDecoder.decode(prodCode, "UTF-8");
+				shopID = URLDecoder.decode(shopID, "UTF-8");
 				
-				// DAO 사용, 검색 실행
-				saleList = dao.getSaleList(userID, prodCode);
+				
+				if(itemName == null || itemName.equals("")) {
+					
+					
+					// DAO 사용, 검색 실행
+					saleList = dao.getSaleList(shopID);
+					
+				} else {
+					
+					itemName = URLDecoder.decode(itemName, "UTF-8");
+					
+					saleList = dao.getSaleListByItemName(shopID, itemName);
+					
+				}
+				
+				
 				
 				// JSON 으로 변환
 				String json = convertToJson(saleList);
@@ -62,6 +74,7 @@ public class SaleSearchCommand implements Command {
 	
 	private String convertToJson(ArrayList<SaleDTO> list) {
 		StringBuffer result = new StringBuffer("");
+		ItemDAO itemDAO = new ItemDAO();
 		
 		result.append("{\"result\":[");
 		
@@ -73,6 +86,8 @@ public class SaleSearchCommand implements Command {
 			result.append("{\"id\": \"" + id + "\",");
 			result.append("\"saleID\": \"" + list.get(i).getSaleID() + "\",");
 			result.append("\"saleDate\": \"" + list.get(i).getSaleDate() + "\",");
+			result.append("\"itemID\": \"" + list.get(i).getItemID() + "\",");
+			result.append("\"itemName\": \"" + itemDAO.getItem(list.get(i).getItemID()).getItemName() + "\",");
 			result.append("\"saleCount\": \"" + list.get(i).getSaleCount() + "\"}");
 			
 			if(i != list.size() -1) result.append(",");

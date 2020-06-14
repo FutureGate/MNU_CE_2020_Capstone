@@ -17,6 +17,34 @@ public class ItemDAO {
 		
 	}
 	
+	public ItemDTO getItem(int itemID) {
+		ItemDTO item = null;
+		
+		String sql = "select * from item_table where item_id = ?";
+		
+		try {
+			conn = DBConnector.getInstance().getConnector();
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, itemID);
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				item = new ItemDTO();
+				
+				item.setItemID(rs.getInt("item_id"));
+				item.setItemName(rs.getString("item_name"));
+				item.setShopID(rs.getInt("shop_id"));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return item;
+	}
+	
 	public ArrayList<ItemDTO> getItemList(int shopID) {
 		ArrayList<ItemDTO> list = new ArrayList<ItemDTO>();
 		
@@ -50,9 +78,6 @@ public class ItemDAO {
 	public ArrayList<ItemDTO> getItemListByItemName(int shopID, String itemName) {
 		ArrayList<ItemDTO> list = new ArrayList<ItemDTO>();
 		
-		System.out.println(shopID);
-		System.out.println(itemName);
-		
 		String sql = "select * from item_table where shop_id = ? and item_name like ?";
 		
 		try {
@@ -60,13 +85,11 @@ public class ItemDAO {
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setInt(1, shopID);
-			pstmt.setString(2, itemName);
+			pstmt.setString(2, "%" + itemName + "%");
 			
 			ResultSet rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				System.out.println("!!");
-				
 				ItemDTO item = new ItemDTO();
 				
 				item.setItemID(rs.getInt("item_id"));
@@ -126,14 +149,14 @@ public class ItemDAO {
 	
 	public boolean modify(int itemID, String itemName) {
 		
-		String sql = "update item_table set item_name = ? where shop_id = ?";
+		String sql = "update item_table set item_name = ? where item_id = ?";
 		
 		try {
 			conn = DBConnector.getInstance().getConnector();
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setInt(1, itemID);
-			pstmt.setString(2, itemName);
+			pstmt.setString(1, itemName);
+			pstmt.setInt(2, itemID);
 			
 			pstmt.executeUpdate();
 		

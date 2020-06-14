@@ -11,7 +11,8 @@
 		ShopDTO shop = (ShopDTO) request.getSession().getAttribute("shop");
 		
 		String userID = user.getUserID();
-
+		int shopID = shop.getShopID();
+		
 	%>
 	<link href="./css/tabulator.css" rel="stylesheet">
 	<link rel="stylesheet"
@@ -53,7 +54,7 @@
 								<div class="ui form">
 									<div class="field">
 						  				<div class="ui icon input">
-									  		<input type="text" name="search" id="searchInput" placeholder="상품코드">
+									  		<input type="text" name="search" id="searchInput" placeholder="상품 이름">
 									  		<i class="inverted circular search link icon" id="searchButton"></i>
 										</div>
 									</div>
@@ -83,12 +84,16 @@
       						</div>
       						
       						<div class="field">
-      							<label>상품코드</label>
-       	 						<input type="text" name="prodCode" id="prodCodeInput" placeholder="상품코드" onChange="onChangeListener();" disabled>
+      							<label>상품 번호</label>
+      							
+      							<div class="ui icon input disabled">
+								  		<input type="text" name="itemID" id="itemIDInput" placeholder="상품 번호" onChange="onChangeListener();" disabled>
+								  		<i class="inverted circular search icon"  id="itemSearchButton"></i>
+								</div>
       						</div>
       						<div class="field">
-      							<label>상품명</label>
-       	 						<input type="text" name="prodName" id="prodNameInput" placeholder="상품명" onChange="onChangeListener();" disabled>
+      							<label>상품 이름</label>
+       	 						<input type="text" name="itemName" id="itemNameInput" placeholder="상품 이름" onChange="onChangeListener();" disabled>
       						</div>
       						<div class="field">
       							<label>판매수량</label>
@@ -107,6 +112,46 @@
 			</div>
 		</div>
 		
+		<div class="ui modal" id="itemSearchModal">
+			<div class="header">
+				상품 선택
+  			</div>
+  			
+  			<div class="content">
+				<div class="ui grid">
+					<div class="row">
+						<div class="four wide left aligned column">
+							<div class="ui form">
+								<div class="field">
+					  				<div class="ui icon input">
+								  		<input type="text" name="search" id="searchItemInput" placeholder="상품 이름">
+								  		<i class="inverted circular search link icon" id="searchItemButton"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="twelve wide right aligned column">
+						</div>
+					</div>
+				</div>
+				<table class="ui selectable celled table" id="itemTable">
+					
+				</table>
+    		</div>
+  		
+	  		<div class="actions">
+	    		<div class="ui black deny button" id="modalCancelButton">
+	      			취소
+	    		</div>
+	    	
+		    	<div class="ui positive labeled icon button" id="modalConfirmButton">
+		      		확인
+		      		<i class="checkmark icon"></i>
+		    	</div>
+	  		</div>
+		</div>
+		
+		
 		<jsp:include page="./fragment/footer.jsp"></jsp:include>
 	</div>
 
@@ -115,6 +160,7 @@
 	<script type="text/javascript" src="./js/moment-with-locales.js"></script>
 	<script>
 		var userID = '<%= userID %>';
+		var shopID = '<%= shopID %>';
 		var search = '';
 	
 		viewSegment = $('#viewSegment');
@@ -125,16 +171,19 @@
 		saveButton = $('#saveButton');
 		resetButton = $('#resetButton');
 		searchButton = $('#searchButton');
+		itemSearchButton = $('#itemSearchButton');
 		
 		saleDateInput = $('#saleDateInput');
-		prodCodeInput = $('#prodCodeInput');
-		prodNameInput = $('#prodNameInput');
+		itemIDInput = $('#itemIDInput');
+		itemNameInput = $('#itemNameInput');
 		saleCountInput = $('#saleCountInput');
 		searchInput = $('#searchInput');
 		
 		viewSegment = $('#viewSegment');
 		
 		inputForm = $('#inputForm')[0];
+		
+		itemSearchModal = $('#itemSearchModal');
 		
 		table = null;
 		
@@ -143,8 +192,11 @@
 		var selectedRowId = -1;
 		
 		var saleID = 0;
-		var prodCode = '';
-		var prodName = '';
+		var itemID = 0;
+		var itemName = '';
+		
+		var selectedItemID = 0;
+		var selectedItemName = '';
 		
 		$(document).ready(function() {
 		 	initialize();
@@ -163,17 +215,21 @@
 			 	height:205,
 			 	layout:"fitColumns",
 			 	columns:[
-			 		{title:"판매번호", field:"saleID"},
+			 		{title:"판매 번호", field:"saleID"},
 				 	{title:"판매일", field:"saleDate", sorter:"date"},
-				 	{title:"상품코드", field:"prodCode"},
-				 	{title:"상품명", field:"prodName"},
-				 	{title:"판매수량", field:"saleCount"},
+				 	{title:"상품 번호", field:"itemID"},
+				 	{title:"상품 이름", field:"itemName"},
+				 	{title:"판매 수량", field:"saleCount"},
 			 	],
 			 	
 			 	rowClick:function(e, row){
 			 		tableRowClickListener(e, row);
 			 	},
 			});
+		 	
+		 	search = searchInput.val();
+		 	
+		 	loadTableData(search);
 		}
 		
 		function setListener() {
@@ -182,6 +238,9 @@
 			saveButton.click(saveButtonListener);
 			resetButton.click(resetButtonListener);
 			searchButton.click(searchButtonListener);
+			itemSearchButton.click(itemSearchButtonListener);
+			
+			
 		}
 		
 		function setLoading(state) {
@@ -197,16 +256,20 @@
 				inputSegment.removeClass('disabled');
 				saleDateInput.attr('disabled', false);
 				saleCountInput.attr('disabled', false);
+				
 				resetButton.removeClass('disabled');
 				saveButton.removeClass('disabled');
+				itemSearchButton.addClass('link');
 			} else {
 				resetInput();
 				
 				inputSegment.addClass('disabled');
 				saleDateInput.attr('disabled', true);
 				saleCountInput.attr('disabled', true);
+				
 				resetButton.addClass('disabled');
 				saveButton.addClass('disabled');
+				itemSearchButton.removeClass('link');
 			}
 		}
 		
@@ -241,6 +304,9 @@
 		}
 		
 		function addButtonListener() {
+			selectedItemID = 0;
+			selectedItemName = '';
+			
 			setInputState(true);
 			
 			addButton.addClass('disabled');
@@ -250,9 +316,6 @@
 			
 			resetInput();
 			saleID = 0;
-			
-			prodCodeInput.val(prodCode);
-			prodNameInput.val(prodName);
 		}
 		
 		function deleteButtonListener() {
@@ -293,15 +356,20 @@
 			loadTableData(search);
 		}
 		
+		function itemSearchButtonListener() {
+			initModal();
+			
+		}
+		
 		function loadTableData(search) {
 			setLoading(true);
 			
 			$.ajax({
-				url: "saleSearchAction.do",
+				url: "saleSearchAction.do", 
 				type: "POST",
 				data : {
-					userID: encodeURIComponent(userID),
-					prodCode: encodeURIComponent(search)
+					shopID: encodeURIComponent(shopID),
+					itemName: encodeURIComponent(search)
 				},
 				success: function(data) {
 					if(data == "") {
@@ -314,8 +382,8 @@
 					
 					table.setData(result);
 					
-					prodCode = result[0].prodCode;
-					prodName = result[0].prodName;
+					itemID = result[0].itemID;
+					itemName = result[0].itemName;
 					
 					addButton.removeClass('disabled');
 				},
@@ -329,8 +397,8 @@
 		
 		function loadInputData(data) {
 			saleDateInput.val(data.saleDate);
-			prodCodeInput.val(data.prodCode);
-			prodNameInput.val(data.prodName);
+			itemIDInput.val(data.itemID);
+			itemNameInput.val(data.itemName);
 			saleCountInput.val(data.saleCount);
 		}
 		
@@ -341,10 +409,9 @@
 		
 		function saveData() {
 			
-			
 			var saleDate = saleDateInput.val();
-			
 			var saleCount = saleCountInput.val();
+			var itemID = itemIDInput.val();
 			
 			setLoading(false);
 			
@@ -353,19 +420,21 @@
 				type: "POST",
 				data : {
 					saleID : encodeURIComponent(saleID),
-					userID: encodeURIComponent(userID),
 					saleDate: encodeURIComponent(saleDate),
-					prodCode: encodeURIComponent(prodCode),
-					prodName: encodeURIComponent(prodName),
+					shopID: encodeURIComponent(shopID),
+					itemID: encodeURIComponent(itemID),
 					saleCount: encodeURIComponent(saleCount)
 				},
 				success: function(data) {
-					loadTableData(prodCode);
+					search = searchInput.val();
+					loadTableData(search);
 					isEditing = false;
 					isSelected = false;
 				},
-				error: function (jqXHR, textStatus, errorThrown) {
-					alert("저장에 실패하였습니다.");
+				error: function (req, status, error) {
+					if(req.status == 566) {
+						alert('정보를 모두 입력해주세요');
+					}
 				},
 				complete: function(data) {
 					
@@ -400,12 +469,19 @@
 		}
 		
 		function resetTable() {
+			saleID = 0;
+			isSelected = false;
+			
 			table.clearData();
 			table.deselectRow();
 			table.clearSort();
 		}
 		
 		function resetInput() {
+			
+			isEditing = false;
+			saleID = 0;
+			
 			inputForm.reset();
 		}
 		
@@ -422,6 +498,115 @@
 		        e.preventDefault();
 		    });
 		    $('html, body').addClass('no-scroll');
+		}
+		
+		
+		// Modal 창 js 부분
+		
+		var itemTable = null;
+		
+		var cancelButton = $('#modalCancelButton');
+		var confirmButton = $('#modalConfirmButton');
+		var searchItemButton = $('#searchItemButton');
+		
+		var searhItemInput = $('#searchItemInput');
+		
+		
+		var isItemSelected = false;
+		var selectedItemTableRowId = -1;
+		
+		function initModal() {
+			itemSearchModal.modal('show');
+			
+			searhItemInput.val('');
+			confirmButton.addClass('disabled');
+			
+			initializeItemTable();
+
+			setModalListener();
+		}
+		
+		function initializeItemTable() {
+			itemTable = new Tabulator("#itemTable", {
+			 	height:205,
+			 	layout:"fitColumns",
+			 	columns:[
+			 		{title:"상품 번호", field:"itemID"},
+				 	{title:"상품 이름", field:"itemName"}
+			 	],
+			 	
+			 	rowClick:function(e, row){
+			 		itemTableRowClickListener(e, row);
+			 	},
+			});
+		 	
+		 	search = searhItemInput.val();
+		 	
+		 	loadItemTableData(search);
+		}
+		
+		function setModalListener() {
+			confirmButton.click(confirmButtonListener);
+			searchItemButton.click(searchItemButtonListener);
+		}
+		
+		function confirmButtonListener() {
+			
+		}
+		
+		function searchItemButtonListener() {
+			search = searhItemInput.val();
+			
+			loadItemTableData(search);
+		}
+		
+		function loadItemTableData(itemName) {
+			setLoading(true);
+			
+			$.ajax({
+				url: "itemSearchAction.do",
+				type: "POST",
+				data : {
+					shopID: encodeURIComponent(shopID),
+					itemID: encodeURIComponent(itemID),
+					itemName: encodeURIComponent(itemName)
+				},
+				success: function(data) {
+					
+					if(data == "") {
+						alert("해당 결과가 존재하지 않습니다.");
+						return;
+					}
+					
+					var jsonData = JSON.parse(data);
+					var result = jsonData.result;
+					
+					itemTable.setData(result);
+					
+				},
+				complete: function(data) {
+					setLoading(false);
+				}
+			});
+			
+			
+		}
+		
+		function itemTableRowClickListener(e, row) {
+			itemTable.deselectRow();
+			itemTable.selectRow(row.getData().id);
+	 		
+			confirmButton.removeClass('disabled');
+			
+			selectedItemID = row.getData().itemID;
+			selectedItemName = row.getData().itemName;
+	 		selectedItemTableRowId = row.getData().id;
+	 		isItemSelected = true;
+		}
+		
+		function confirmButtonListener() {
+			itemIDInput.val(selectedItemID);
+			itemNameInput.val(selectedItemName);
 		}
 		
 	</script>

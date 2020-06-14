@@ -16,17 +16,16 @@ public class SaleDAO {
 		
 	}
 	
-	public ArrayList<SaleDTO> getSaleList(String userID, String prodCode) {
+	public ArrayList<SaleDTO> getSaleList(String shopID) {
 		ArrayList<SaleDTO> list = new ArrayList<SaleDTO>();
 		
-		String sql = "select * from sale_table where user_id = ? and prod_code = ? order by sale_date desc";
+		String sql = "select * from sale_table where shop_id = ? order by sale_date desc";
 		
 		try {
 			conn = DBConnector.getInstance().getConnector();
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, userID);
-			pstmt.setString(2, prodCode);
+			pstmt.setString(1, shopID);
 			
 			ResultSet rs = pstmt.executeQuery();
 			
@@ -35,6 +34,8 @@ public class SaleDAO {
 				
 				sale.setSaleID(rs.getInt("sale_id"));
 				sale.setSaleDate(rs.getString("sale_date"));
+				sale.setShopID(rs.getInt("shop_id"));
+				sale.setItemID(rs.getInt("item_id"));
 				sale.setSaleCount(rs.getInt("sale_count"));
 				
 				list.add(sale);
@@ -47,20 +48,52 @@ public class SaleDAO {
 		return list;
 	}
 
-	public boolean add(String saleID, String userID, String saleDate, String prodCode, String prodName, String saleCount) {
+	public ArrayList<SaleDTO> getSaleListByItemName(String shopID, String itemName) {
+		ArrayList<SaleDTO> list = new ArrayList<SaleDTO>();
 		
-		String sql = "insert into sale_table values (?, ?, ?, ?, ?, ?)";
+		String sql = "select * from sale_table where shop_id = ? and item_name = ? order by sale_date desc";
+		
+		try {
+			conn = DBConnector.getInstance().getConnector();
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, shopID);
+			pstmt.setString(2, itemName);
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				SaleDTO sale = new SaleDTO();
+				
+				sale.setSaleID(rs.getInt("sale_id"));
+				sale.setSaleDate(rs.getString("sale_date"));
+				sale.setShopID(rs.getInt("shop_id"));
+				sale.setItemID(rs.getInt("item_id"));
+				sale.setSaleCount(rs.getInt("sale_count"));
+				
+				list.add(sale);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+	
+	public boolean add(String saleID, String saleDate, String shopID, String itemID, String saleCount) {
+		
+		String sql = "insert into sale_table values (?, ?, ?, ?, ?)";
 		
 		try {
 			conn = DBConnector.getInstance().getConnector();
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, saleID);
-			pstmt.setString(2, userID);
-			pstmt.setString(3, saleDate);
-			pstmt.setString(4, prodCode);
-			pstmt.setString(5, prodName);
-			pstmt.setString(6, saleCount);
+			pstmt.setString(2, saleDate);
+			pstmt.setString(3, shopID);
+			pstmt.setString(4, itemID);
+			pstmt.setString(5, saleCount);
 			
 			pstmt.executeUpdate();
 		
@@ -91,11 +124,26 @@ public class SaleDAO {
 		return false;
 	}
 	
-	public void modify(String saleID, String userID, String saleDate, String prodCode, String prodName,
-			String saleCount) {
+	public boolean modify(String saleID, String saleDate, String itemID, String saleCount) {
 		
-		delete(saleID);
-		add(saleID, userID, saleDate, prodCode, prodName, saleCount);
+		String sql = "update sale_table set sale_date = ?, item_id = ?, sale_count = ? where sale_id = ?";
+		
+		try {
+			conn = DBConnector.getInstance().getConnector();
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, saleDate);
+			pstmt.setString(2, itemID);
+			pstmt.setString(3, saleCount);
+			pstmt.setString(4, saleID);
+			
+			pstmt.executeUpdate();
+		
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
 		
 	}
 }

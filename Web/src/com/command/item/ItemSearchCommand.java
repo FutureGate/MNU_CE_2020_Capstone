@@ -36,7 +36,6 @@ public class ItemSearchCommand implements Command {
 			
 		} else {
 			
-			
 			try {
 				shopID = URLDecoder.decode(shopID, "UTF-8");
 				itemID = URLDecoder.decode(itemID, "UTF-8");
@@ -44,12 +43,9 @@ public class ItemSearchCommand implements Command {
 				if(itemName == null || itemName.equals("")) {
 					// 검색조건이 없을 경우, 전체 조회 실행
 					
-					System.out.println(itemID);
 					itemList = dao.getItemList(Integer.parseInt(shopID));
 				} else {
 					itemName = URLDecoder.decode(itemName, "UTF-8");
-					
-					System.out.println(itemName);
 					
 					itemList = dao.getItemListByItemName(Integer.parseInt(shopID), itemName);
 				}
@@ -58,10 +54,7 @@ public class ItemSearchCommand implements Command {
 				// JSON 으로 변환
 				String json = convertToJson(itemList);
 				
-				System.out.println(json);
-				
 				res.getWriter().write(json);
-				
 				
 			} catch (Exception e) {
 				

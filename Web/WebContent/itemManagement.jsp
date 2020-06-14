@@ -80,7 +80,7 @@
 						<div class="two fields">
       						<div class="field">
       							<label>상품 번호</label>
-        						<input type="text" name="itemID" id="itemIDInput" onChange="onChangeListener();"  required="required">
+        						<input type="text" name="itemID" id="itemIDInput" onChange="onChangeListener();"  required="required" disabled>
       						</div>
       						
       						<div class="field">
@@ -163,6 +163,10 @@
 			 		tableRowClickListener(e, row);
 			 	},
 			});
+		 	
+		 	search = searchInput.val();
+		 	
+		 	loadTableData(search);
 		}
 		
 		function setListener() {
@@ -276,6 +280,11 @@
 			addButton.addClass('disabled');
 			deleteButton.addClass('disabled');
 			
+			setInputState(false);
+			
+			isEditing = false;
+			
+			resetInput();
 			resetTable();
 			loadTableData(search);
 		}
@@ -292,7 +301,6 @@
 					itemName: encodeURIComponent(itemName)
 				},
 				success: function(data) {
-					console.log(data);
 					
 					if(data == "") {
 						alert("해당 결과가 존재하지 않습니다.");
@@ -301,8 +309,6 @@
 					
 					var jsonData = JSON.parse(data);
 					var result = jsonData.result;
-					
-					console.log(result);
 					
 					table.setData(result);
 					
@@ -320,10 +326,8 @@
 		}
 		
 		function loadInputData(data) {
-			itemIDInput.val(data.saleDate);
-			itemNameInput.val(data.itemID);
-			prodNameInput.val(data.prodName);
-			saleCountInput.val(data.saleCount);
+			itemIDInput.val(data.itemID);
+			itemNameInput.val(data.itemName);
 		}
 		
 		function removeItem(id) {
@@ -333,26 +337,24 @@
 		
 		function saveData() {
 			
-			
-			var saleDate = itemIDInput.val();
-			
-			var saleCount = saleCountInput.val();
+			var itemID = itemIDInput.val();
+			var itemName = itemNameInput.val();
 			
 			setLoading(false);
 			
 			$.ajax({
-				url: "saleSaveAction.do",
+				url: "itemSaveAction.do",
 				type: "POST",
 				data : {
-					saleID : encodeURIComponent(saleID),
-					userID: encodeURIComponent(userID),
-					saleDate: encodeURIComponent(saleDate),
-					itemID: encodeURIComponent(itemID),
-					prodName: encodeURIComponent(prodName),
-					saleCount: encodeURIComponent(saleCount)
+					itemID : encodeURIComponent(itemID),
+					itemName: encodeURIComponent(itemName),
+					shopID: encodeURIComponent(shopID)
 				},
 				success: function(data) {
-					loadTableData(itemID);
+					search = searchInput.val();
+					
+					loadTableData(search);
+					
 					isEditing = false;
 					isSelected = false;
 				},
@@ -369,10 +371,10 @@
 			setLoading(true);			
 			
 			$.ajax({
-				url: "saleDeleteAction.do",
+				url: "itemDeleteAction.do",
 				type: "POST",
 				data : {
-					saleID : encodeURIComponent(saleID),
+					itemID : encodeURIComponent(itemID),
 				},
 				success: function(data) {
 					removeItem(selectedRowId);
@@ -392,12 +394,17 @@
 		}
 		
 		function resetTable() {
+			itemID = 0;
+			isSelected = false;
 			table.clearData();
 			table.deselectRow();
 			table.clearSort();
 		}
 		
 		function resetInput() {
+			
+			isEditing = false;
+			itemID = 0;
 			inputForm.reset();
 		}
 		
@@ -411,7 +418,7 @@
 		
 		function scrollDisable(){
 			$('html').addClass('no-scroll').on('scroll touchmove mousewheel', function(e){
-		        e.preventDefault();
+		        //e.preventDefault();
 		    });
 		    $('html, body').addClass('no-scroll');
 		}
