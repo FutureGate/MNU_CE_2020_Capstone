@@ -19,7 +19,7 @@ class DBConnector:
         return cls.instance
 
     def load_config(self):
-        file = open("dbConfig.conf", "r")
+        file = open("../dbConfig.conf", "r")
 
         lines = file.readlines()
 

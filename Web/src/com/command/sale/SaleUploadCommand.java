@@ -38,7 +38,6 @@ public class SaleUploadCommand implements Command {
 			//System.out.println("업로드파일명 : " + multipartRequest.getFilesystemName("filepond"));
 			//System.out.println("원래파일명 : " + multipartRequest.getOriginalFileName("filepond"));
 			
-			
 			String orgFileName = multipartRequest.getFilesystemName("filepond");
 			int pos = orgFileName.lastIndexOf( "." );
 			String ext = orgFileName.substring( pos + 1 );

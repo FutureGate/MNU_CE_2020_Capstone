@@ -1,6 +1,5 @@
 import pandas as pd
-import numpy as np
-from DBConnector import DBConnector
+from db.DBConnector import DBConnector
 
 # 2016 데이터 로드
 data_path = './data/'
