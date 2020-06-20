@@ -11,3 +11,5 @@ cryptography
 flask
 flask-restful
 flask-mysql
+flask-cors
+sklearn

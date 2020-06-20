@@ -16,6 +16,40 @@ public class SaleDAO {
 		
 	}
 	
+	public SaleDTO getSaleByInfo(String saleDate, String shopID, String itemID) {
+		String sql = "select * from sale_table where sale_date = ? and shop_id = ? and item_id = ?";
+		
+		try {
+			conn = DBConnector.getInstance().getConnector();
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, saleDate);
+			pstmt.setString(2, shopID);
+			pstmt.setString(3, itemID);
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				SaleDTO sale = new SaleDTO();
+				
+				sale.setSaleID(rs.getInt("sale_id"));
+				sale.setSaleDate(rs.getString("sale_date"));
+				sale.setShopID(rs.getInt("shop_id"));
+				sale.setItemID(rs.getInt("item_id"));
+				sale.setSaleCount(rs.getInt("sale_count"));
+				
+				return sale;
+			} else {
+				return null;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
 	public ArrayList<SaleDTO> getSaleList(String shopID) {
 		ArrayList<SaleDTO> list = new ArrayList<SaleDTO>();
 		
@@ -146,4 +180,26 @@ public class SaleDAO {
 		return false;
 		
 	}
+	
+	public boolean addSaleCount(String saleID, String saleCount) {
+		
+		String sql = "update sale_table set sale_count = sale_count + ? where sale_id = ?";
+		
+		try {
+			conn = DBConnector.getInstance().getConnector();
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, saleCount);
+			pstmt.setString(2, saleID);
+			
+			pstmt.executeUpdate();
+		
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+		
+	}
+
 }

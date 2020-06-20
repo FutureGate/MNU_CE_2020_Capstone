@@ -60,20 +60,17 @@
 					<h4 class="ui header left aligned">
 						<div class="content">
 							<i class="clipboard outline icon"></i>
-							업로드한 파일 목록  (최근 5일)
+							엑셀 파일 양식 받기
 						</div>
 					</h4>
 					
 					<div class="ui middle aligned divided list">
 					
-						<div class="item">
-							<div class="right floated content">
-								상태 : 데이터 처리 중
-							</div>
-							
-							
-							<div class="content">
-								파일 이름
+						<div class="item middle aligned" style="text-align: center;">
+							<div class="content middle aligned">
+								<a class="ui blue fluid button" href="saleFormDownload.do">
+									<i class="download icon"></i> 다운로드
+								</a>
 							</div>
 						</div>
 					</div>

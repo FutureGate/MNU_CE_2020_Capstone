@@ -15,7 +15,7 @@ import com.command.item.ItemDeleteCommand;
 import com.command.item.ItemSaveCommand;
 import com.command.item.ItemSearchCommand;
 import com.command.sale.SaleDeleteCommand;
-import com.command.sale.SaleDownloadCommand;
+import com.command.sale.SaleFormDownloadCommand;
 import com.command.sale.SaleSaveCommand;
 import com.command.sale.SaleSearchCommand;
 import com.command.sale.SaleUploadCommand;
@@ -73,7 +73,8 @@ public class Controller extends HttpServlet {
 		// 단순 뷰
 		if(page.equals("/index.do")) {
 			forward = new ForwardingAction(false, "index.jsp");
-		}
+			
+		} 
 		
 		
 		/* ===========================================
@@ -106,9 +107,14 @@ public class Controller extends HttpServlet {
 		
 		// 메인 페이지로 가도록 하는 페이지
 		} else if(page.equals("/goHome.do")) {
-			forward = new ForwardingAction(true, "saleManagementAuto.do");
+			forward = new ForwardingAction(true, "dashboard.do");
 	
-		// 회원 정보 수정 페이지
+		// 대시보드 페이지
+		} else if (page.equals("/dashboard.do")) {
+			forward = new ForwardingAction(false, "dashboard.jsp");
+			
+			
+		// 회원 정보 수정 처리 페이지
 		} else if (page.equals("/userSetting.do")) {
 			forward = new ForwardingAction(false, "userSetting.jsp");
 			
@@ -231,10 +237,12 @@ public class Controller extends HttpServlet {
 			cmd = new SaleUploadCommand();
 			
 			forward = cmd.execute(req, res);
-		} else if (page.equals("/saleManagementDownload.do")) {
-			cmd = new SaleDownloadCommand();
+		} else if (page.equals("/saleFormDownload.do")) {
+			cmd = new SaleFormDownloadCommand();
 			
 			forward = cmd.execute(req, res);
+			
+		// 회원 로그인 처리 페이지
 		}
 		
 		

@@ -239,8 +239,6 @@
 			resetButton.click(resetButtonListener);
 			searchButton.click(searchButtonListener);
 			itemSearchButton.click(itemSearchButtonListener);
-			
-			
 		}
 		
 		function setLoading(state) {
@@ -509,7 +507,7 @@
 		var confirmButton = $('#modalConfirmButton');
 		var searchItemButton = $('#searchItemButton');
 		
-		var searhItemInput = $('#searchItemInput');
+		var searchItemInput = $('#searchItemInput');
 		
 		
 		var isItemSelected = false;
@@ -518,7 +516,7 @@
 		function initModal() {
 			itemSearchModal.modal('show');
 			
-			searhItemInput.val('');
+			searchItemInput.val('');
 			confirmButton.addClass('disabled');
 			
 			initializeItemTable();
@@ -540,7 +538,7 @@
 			 	},
 			});
 		 	
-		 	search = searhItemInput.val();
+		 	search = searchItemInput.val();
 		 	
 		 	loadItemTableData(search);
 		}
@@ -555,7 +553,7 @@
 		}
 		
 		function searchItemButtonListener() {
-			search = searhItemInput.val();
+			search = searchItemInput.val();
 			
 			loadItemTableData(search);
 		}

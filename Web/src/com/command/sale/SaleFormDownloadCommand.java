@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.command.Command;
 import com.controller.ForwardingAction;
 
-public class SaleDownloadCommand implements Command {
+public class SaleFormDownloadCommand implements Command {
 
 	@Override
 	public ForwardingAction execute(HttpServletRequest req, HttpServletResponse res) throws IOException {
@@ -19,11 +19,10 @@ public class SaleDownloadCommand implements Command {
 		boolean isRedirect = true;
 		String viewPage = null;
 		
-		String saveDir = req.getSession().getServletContext().getRealPath("/upload/");
+		String saveDir = "C:\\upload";
 		String encType = "UTF-8";
-		String serverURL = req.getScheme()+"://"+req.getServerName()+":"+req.getServerPort();	
 		
-		String fileName = req.getParameter("filename");
+		String fileName = "form.xlsx";
 		
 		int maxSize = 1024*1024*3;
 		
