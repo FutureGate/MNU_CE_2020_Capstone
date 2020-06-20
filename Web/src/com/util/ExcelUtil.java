@@ -1,13 +1,14 @@
 package com.util;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 public class ExcelUtil {
 	private static ExcelUtil instance = new ExcelUtil();
@@ -24,42 +25,60 @@ public class ExcelUtil {
 		return instance;
 	}
 	
-	public boolean xlsxFileCheck(File file) {
+	public boolean excelFileCheck(File file) {
+		int rowCount = 0;
+		int cellCount = 0;
+		
+		
 		try {
-            FileInputStream fis = new FileInputStream(file);
-            HSSFWorkbook workbook = new HSSFWorkbook(fis);
-            HSSFSheet sheet = workbook.getSheetAt(0); // 해당 엑셀파일의 시트(Sheet) 수
-            int rows = sheet.getPhysicalNumberOfRows(); // 해당 시트의 행의 개수
-            for (int rowIndex = 1; rowIndex < rows; rowIndex++) {
-                HSSFRow row = sheet.getRow(rowIndex); // 각 행을 읽어온다
-                if (row != null) {
-                    int cells = row.getPhysicalNumberOfCells();
-                    for (int columnIndex = 0; columnIndex <= cells; columnIndex++) {
-                        HSSFCell cell = row.getCell(columnIndex); // 셀에 담겨있는 값을 읽는다.
-                        String value = "";
-                        
-                        switch (cell.getCellType()) { // 각 셀에 담겨있는 데이터의 타입을 체크하고 해당 타입에 맞게 가져온다.
-                        case NUMERIC:
-                            value = cell.getNumericCellValue() + "";
-                            break;
-                        case STRING:
-                            value = cell.getStringCellValue() + "";
-                            break;
-                        case BOOLEAN:
-                            value = cell.getBooleanCellValue() + "";
-                            break;
-                        case ERROR:
-                            value = cell.getErrorCellValue() + "";
-                            break;
-                        }
-                        System.out.println(value);
-                    }
-                }
+			Workbook wb = WorkbookFactory.create(file);
+			
+			Sheet sheet = wb.getSheetAt(0);
+            
+            for(Row row : sheet) {
+            	
+            	cellCount = 0;
+            	
+            	for(Cell cell : row) {
+            		if(cellCount > 2)
+            			return false;
+            		
+            		String data = cell.toString();
+            		
+            		if(rowCount == 0) {
+            			switch (cellCount) {
+						case 0:
+							if(!cell.toString().equals("판매일자"))
+								return false;
+							break;
+						case 1:
+							if(!cell.toString().equals("상품번호"))
+								return false;
+							break;
+						case 2:
+							if(!cell.toString().equals("판매수량"))
+								return false;
+							break;	
+						default:
+							break;
+						}
+            		} else {
+            			int 
+					
+            		}
+            		
+            		System.out.println(cell.toString());
+            		
+            		cellCount++;
+            	}
+            	rowCount++;
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+            
+            return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		return false;
 	}
 }

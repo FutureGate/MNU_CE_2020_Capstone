@@ -106,7 +106,7 @@ public class Controller extends HttpServlet {
 		
 		// 메인 페이지로 가도록 하는 페이지
 		} else if(page.equals("/goHome.do")) {
-			forward = new ForwardingAction(true, "saleManagement.do");
+			forward = new ForwardingAction(true, "saleManagementAuto.do");
 	
 		// 회원 정보 수정 페이지
 		} else if (page.equals("/userSetting.do")) {

@@ -129,7 +129,7 @@
 				labelFileProcessing: '업로드 중',
 				labelFileProcessingComplete: '업로드 완료',
 				labelButtonDownloadItem: '다운로드',
-				labelFileProcessingError: '업로드 중 오류 발생',
+				labelFileProcessingError: '파일이 잘못되었거나 등록되지 않은 상품 정보가 있습니다',
 				labelTapToRetry: '탭하여 재시도',
 				
 				allowDownloadByUrl: false,

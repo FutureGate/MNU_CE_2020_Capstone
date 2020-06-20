@@ -22,8 +22,7 @@ public class SaleUploadCommand implements Command {
 		String viewPage = null;
 		
 		
-		
-		String saveDir = req.getSession().getServletContext().getRealPath("/upload/");
+		String saveDir = "C:\\upload";
 
 		int maxSize = 1024*1024*3;
 		
@@ -45,9 +44,8 @@ public class SaleUploadCommand implements Command {
 			File file = multipartRequest.getFile("filepond");
 			boolean result = true;
 			
-			
 			if(ext.equals("xlsx")) {
-				result = ExcelUtil.getInstance().xlsxFileCheck(file);
+				result = ExcelUtil.getInstance().excelFileCheck(file);
 			}
 			
 			if(result == false) {
