@@ -21,36 +21,19 @@ def test():
 
 @app.route('/process', methods=['POST', 'GET'])
 def process():
-    shopID = 1
-    itemID = 1
-    #shopID = request.form.get('shopID')
-    #itemID = request.form.get('itemID')
-
-    try:
-
-        return {'error': 'error'}, 404
-    except:
-        print('!')
-
-    return jsonify({
-        'result': itemID
-    })
-
-
-@app.route('/process', methods=['POST'])
-def process():
+    #shopID = 1
+    #itemID = 1
     shopID = request.form.get('shopID')
     itemID = request.form.get('itemID')
 
     try:
-
-        return {'error': 'error'}, 404
+        return jsonify({
+            'itemID': itemID,
+            'shopID': shopID
+        })
     except:
-        print('!')
+        return {'error': 'error'}, 404
 
-    return jsonify({
-        'result': itemID
-    })
 
 
 # =====================================================================
