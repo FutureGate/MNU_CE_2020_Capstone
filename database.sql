@@ -32,24 +32,6 @@ create table USER_TABLE (
 ) default character set utf8mb4 collate utf8mb4_bin;
 
 
-
--- ----------------------------------------------
--- 판매 이력 테이블
--- ----------------------------------------------
-
-create table SALE_TABLE (
-	`sale_id`					integer auto_increment not null,
-	`sale_date`					date not null,
-	`shop_id`					integer not null,
-    `item_id`					integer not null,
-    `sale_count`				integer not null,
-    primary key(sale_id)
-) default character set utf8mb4 collate utf8mb4_bin;
-
-
-
-
-
 -- ----------------------------------------------
 -- 상품 테이블
 -- ----------------------------------------------
@@ -63,23 +45,78 @@ create table ITEM_TABLE (
 ) default character set utf8mb4 collate utf8mb4_bin;
 
 
-
-
 -- ----------------------------------------------
--- 파일 테이블
+-- 판매 이력 테이블
 -- ----------------------------------------------
 
-create table FILE_TABLE (
-	`file_id`					integer auto_increment not null,
-    `file_name`					varchar(256),
-    `user_id`					varchar(10) not null,
-    `upload_date`				date,
-    `state`						varchar(20),
-    primary key(file_id),
-    foreign key (user_id) references USER_TABLE (user_id)
+create table SALE_TABLE (
+	`sale_id`					integer auto_increment not null,
+	`sale_date`					date not null,
+	`shop_id`					integer not null,
+    `item_id`					integer not null,
+    `sale_count`				integer not null,
+    primary key(sale_id),
+    foreign key (shop_id) references SHOP_TABLE (shop_id),
+    foreign key (item_id) references ITEM_TABLE (item_id)
 ) default character set utf8mb4 collate utf8mb4_bin;
 
 
+
+
+
+
+
+
+
+
+-- ----------------------------------------------
+-- 요청 테이블
+-- ----------------------------------------------
+
+create table REQUEST_TABLE (
+	`request_id`					integer auto_increment not null,
+    `shop_id`						integer not null,
+    `item_id`						integer not null,
+    `request_date`					date,
+    `state`							varchar(20),
+    primary key(request_id),
+    foreign key (shop_id) references SHOP_TABLE (shop_id),
+    foreign key (item_id) references ITEM_TABLE (item_id)
+) default character set utf8mb4 collate utf8mb4_bin;
+
+
+
+-- ----------------------------------------------
+-- 예측치 테이블
+-- ----------------------------------------------
+
+create table FORECAST_TABLE (
+    `sale_id`					integer auto_increment not null,
+    `sale_date`					date not null,
+	`shop_id`					integer not null,
+    `item_id`					integer not null,
+    `sale_count`				integer not null,
+    primary key(sale_id),
+    foreign key (shop_id) references SHOP_TABLE (shop_id),
+    foreign key (item_id) references ITEM_TABLE (item_id)
+) default character set utf8mb4 collate utf8mb4_bin;
+
+
+-- ----------------------------------------------
+-- 통계 테이블
+-- ----------------------------------------------
+
+create table STAT_TABLE (
+    `shop_id`					integer not null,
+    `item_id`					integer not null,
+    `year`						integer not null,
+    `month`						integer not null,
+	`sum`						integer not null,
+    `avg`						integer not null,
+    `sale_count`				integer not null,
+    foreign key (shop_id) references SHOP_TABLE (shop_id),
+    foreign key (item_id) references ITEM_TABLE (item_id)
+) default character set utf8mb4 collate utf8mb4_bin;
 
 -- ----------------------------------------------
 -- 테스트 테이블

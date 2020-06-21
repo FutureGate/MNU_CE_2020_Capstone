@@ -19,10 +19,12 @@ def test():
     return jsonify({'result': 'text'})
 
 
-@app.route('/process', methods=['POST'])
+@app.route('/process', methods=['POST', 'GET'])
 def process():
-    shopID = request.form.get('shopID')
-    itemID = request.form.get('itemID')
+    shopID = 1
+    itemID = 1
+    #shopID = request.form.get('shopID')
+    #itemID = request.form.get('itemID')
 
     try:
 
