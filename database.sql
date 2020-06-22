@@ -61,14 +61,6 @@ create table SALE_TABLE (
 ) default character set utf8mb4 collate utf8mb4_bin;
 
 
-
-
-
-
-
-
-
-
 -- ----------------------------------------------
 -- 요청 테이블
 -- ----------------------------------------------
@@ -77,7 +69,7 @@ create table REQUEST_TABLE (
 	`request_id`					integer auto_increment not null,
     `shop_id`						integer not null,
     `item_id`						integer not null,
-    `request_date`					date,
+    `request_date`					date not null,
     `state`							varchar(20),
     primary key(request_id),
     foreign key (shop_id) references SHOP_TABLE (shop_id),
@@ -91,12 +83,13 @@ create table REQUEST_TABLE (
 -- ----------------------------------------------
 
 create table FORECAST_TABLE (
-    `sale_id`					integer auto_increment not null,
+    `forecast_id`				integer auto_increment not null,
+    `base_date`					date not null,
     `sale_date`					date not null,
 	`shop_id`					integer not null,
     `item_id`					integer not null,
     `sale_count`				integer not null,
-    primary key(sale_id),
+    primary key(forecast_id),
     foreign key (shop_id) references SHOP_TABLE (shop_id),
     foreign key (item_id) references ITEM_TABLE (item_id)
 ) default character set utf8mb4 collate utf8mb4_bin;
@@ -109,11 +102,10 @@ create table FORECAST_TABLE (
 create table STAT_TABLE (
     `shop_id`					integer not null,
     `item_id`					integer not null,
-    `year`						integer not null,
-    `month`						integer not null,
+    `base_date`					date not null,
+    `stat_date`					date not null,
 	`sum`						integer not null,
     `avg`						integer not null,
-    `sale_count`				integer not null,
     foreign key (shop_id) references SHOP_TABLE (shop_id),
     foreign key (item_id) references ITEM_TABLE (item_id)
 ) default character set utf8mb4 collate utf8mb4_bin;

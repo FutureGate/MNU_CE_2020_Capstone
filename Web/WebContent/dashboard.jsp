@@ -96,11 +96,11 @@
       							<td>
         							<span>
 	        							<i class="circle icon"></i>
-        							</span><p id="stateText">요청 없음</p>
+        							</span><p id="stateText">처리 중</p>
       							</td>
       							
-      							<td>ㅁㅇㄴㄹ</td>
-      							<td class="right floated collapsing">10 hours ago</td>
+      							<td>상품번호 : 3번</td>
+      							<td class="right floated collapsing">2020-06-20에 요청함</td>
     						</tr>
   						</tbody>
 					</table>

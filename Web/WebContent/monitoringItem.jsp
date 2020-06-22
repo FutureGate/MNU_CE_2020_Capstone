@@ -42,7 +42,7 @@
 
 				<h2 class="ui header">
 					<i class="file alternate outline icon"></i>
-					<div class="content">제품별 수요 모니터링(더미데이터)</div>
+					<div class="content">제품별 수요 모니터링</div>
 				</h2>
 
 				<div class="ui divider"></div>

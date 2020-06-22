@@ -208,7 +208,4 @@ def create_dataset(dataset, look_back=1):
     return np.array(dataX), np.array(dataY)
 
 
-start_predict(1, 3)
-
-
 

@@ -1,11 +1,24 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+from concurrent.futures import ThreadPoolExecutor
+import concurrent.futures
+
+import time
+
+from command.forecast import forecast
 
 # =====================================================================
 # config
 # =====================================================================
 app = Flask(__name__)
 CORS(app)
+
+
+# =====================================================================
+# variables
+# =====================================================================
+
+thread_list = []
 
 
 # =====================================================================
@@ -21,19 +34,37 @@ def test():
 
 @app.route('/process', methods=['POST', 'GET'])
 def process():
-    #shopID = 1
-    #itemID = 1
-    shopID = request.form.get('shopID')
-    itemID = request.form.get('itemID')
+    shop_id = request.form.get('shopID')
+    item_id = request.form.get('itemID')
 
-    try:
-        return jsonify({
-            'itemID': itemID,
-            'shopID': shopID
-        })
-    except:
-        return {'error': 'error'}, 404
+    do_predict(shop_id, item_id)
 
+    return {'result':'success'}
+
+# =====================================================================
+# function
+# =====================================================================
+
+
+def test(a, b):
+    print(a, b)
+
+    time.sleep(10)
+
+
+def do_predict(shop_id, item_id):
+    with ThreadPoolExecutor(max_workers=8) as executor:
+        thread_list.append(executor.submit(test, shop_id, item_id))
+
+        for execution in concurrent.futures.as_completed(thread_list):
+
+            print(shop_id, item_id, 'is done')
+            execution.result()
+            execution.done()
+
+
+def do_process():
+    pass
 
 
 # =====================================================================
