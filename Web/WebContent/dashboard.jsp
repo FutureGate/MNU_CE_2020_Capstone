@@ -90,20 +90,27 @@
 						</div>
 					</h4>
 					
-					<table class="ui celled striped table">
-  						<tbody>
-   							<tr>
-      							<td>
-        							<span>
-	        							<i class="circle icon"></i>
-        							</span><p id="stateText">처리 중</p>
-      							</td>
-      							
-      							<td>상품번호 : 3번</td>
-      							<td class="right floated collapsing">2020-06-20에 요청함</td>
-    						</tr>
-  						</tbody>
-					</table>
+					<div class="ui floating message">
+						<div style="display: inline;">
+       						<i class="circle icon" id="requestStateIcon"></i> <div id="requestStateCell"></div>
+      					</div>
+      					
+      					<br/>
+    							
+    					<div class="">
+				        	<span id="requestItemIDCell"></span>
+				      	</div>
+				      	
+				      	<div class="">
+				        	<span id="requestItemNameCell"></span>
+				      	</div>
+				      	
+				      	<br />
+				      	
+				      	<div class="">
+				        	<span id="requestDateCell"></span>
+				      	</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -165,17 +172,21 @@
 		
 		var searchItemInput = $('#searchItemInput');
 		var itemIDInput = $('#itemIDInput');
-		
+		var itemNameInput = $('#itemNameInput');
 		
 		var isItemSelected = false;
 		var selectedItemTableRowId = -1;
 		
-		requestButton = $('#requestButton');
-		itemSearchButton = $('#itemSearchButton');
+		var requestButton = $('#requestButton');
 		
-		itemSearchModal = $('#itemSearchModal');
+		var itemSearchButton = $('#itemSearchButton');
+		var itemSearchModal = $('#itemSearchModal');
 			
 		$(document).ready(function() {
+			tick();
+			
+			setInterval(tick, 1000);
+			
 			setListener();
 		});
 	
@@ -237,6 +248,11 @@
 		
 		var searchItemInput = $('#searchItemInput');
 		
+		var requestDateCell = $('#requestDateCell');
+		var requestItemIDCell = $('#requestItemIDCell');
+		var requestStateCell = $('#requestStateCell');
+		var requestStateIcon = $('#requestStateIcon');
+		var requestItemNameCell = $('#requestItemNameCell');
 		
 		var isItemSelected = false;
 		var selectedItemTableRowId = -1;
@@ -325,7 +341,68 @@
 		
 		function confirmButtonListener() {
 			itemIDInput.val(selectedItemID);
+			itemNameInput.val(selectedItemName);
 			requestButton.removeClass('disabled');
+		}
+		
+		function tick() {
+			$.ajax({
+				url: "dashboardRequestSearch.do",
+				type: "POST",
+				data : {
+					shopID: shopID,
+				},
+				success: function(data) {
+					if(data == "") {
+						return;
+					}
+					
+					var jsonData = JSON.parse(data);
+					var result = jsonData.result[0];
+					
+					requestDateCell.html('요청일 : ' + result.requestDate);
+					requestItemIDCell.html('상품 번호 : ' + result.itemID);
+					
+					requestStateCell.html('상태 : ' + result.state);
+					requestItemNameCell.html('상품 이름 : ' + result.itemName);
+					
+					state = result.state;
+					
+					requestStateIcon.removeClass('green');
+					requestStateIcon.removeClass('red');
+					requestStateIcon.removeClass('black');
+					
+					if(state == '처리 중') {
+						requestStateIcon.addClass('green');
+						
+						setFormState(false);
+					} else if(state == '오류 발생'){
+						requestStateIcon.addClass('red');
+						
+						setFormState(true);
+					} else if(state == '완료') {
+						requestStateIcon.addClass('black');
+						
+						setFormState(true);
+					}
+						
+					
+										
+				},
+				complete: function(data) {
+				}
+			});
+		}
+		
+		function setFormState(state) {
+			if(state == false) {
+				itemSearchButton.removeClass('link');
+				requestButton.addClass('disabled');
+			} else if(state == true) {
+				itemSearchButton.addClass('link');
+				requestButton.removeClass('disabled');
+			}
+			
 		}
 	</script>
 </body>

@@ -27,6 +27,41 @@ insert into SALE_TABLE values(0, "2020-01-01", 1, 1, 20); -- 1번 판매 이력
 insert into SALE_TABLE values(0, "2020-01-02", 1, 1, 19); -- 1번 판매 이력
 
 
+
+-- ----------------------------------------------
+-- 드림테크 회사에서의 사과잼 예측 데이터 생성
+-- ----------------------------------------------
+
+insert into `FORECAST_TABLE` values (0, '2020-12-31', '2021-01-01 00:00:00', 1, 3, 10);
+insert into `FORECAST_TABLE` values (0, '2020-12-31', '2021-01-02 00:00:00', 1, 3, 9);
+insert into `FORECAST_TABLE` values (0, '2020-12-31', '2021-01-03 00:00:00', 1, 3, 13);
+insert into `FORECAST_TABLE` values (0, '2020-12-31', '2021-01-04 00:00:00', 1, 3, 8);
+insert into `FORECAST_TABLE` values (0, '2020-12-31', '2021-01-05 00:00:00', 1, 3, 6);
+insert into `FORECAST_TABLE` values (0, '2020-12-31', '2021-01-05 00:00:00', 1, 3, 7);
+insert into `FORECAST_TABLE` values (0, '2020-12-31', '2021-01-05 00:00:00', 1, 3, 10);
+insert into `FORECAST_TABLE` values (0, '2020-12-31', '2021-01-05 00:00:00', 1, 3, 15);
+insert into `FORECAST_TABLE` values (0, '2020-12-31', '2021-01-05 00:00:00', 1, 3, 10);
+insert into `FORECAST_TABLE` values (0, '2020-12-31', '2021-01-05 00:00:00', 1, 3, 4);
+
+
+-- ----------------------------------------------
+-- 드림테크 회사에서의 사과잼 통계 데이터 생성
+-- ----------------------------------------------
+
+insert into `STAT_TABLE` values (0, '2020-12-31', '2020-01-01', 1, 3, 200, 12.2);
+insert into `STAT_TABLE` values (0, '2020-12-31', '2020-02-01', 1, 3, 400, 13.2);
+insert into `STAT_TABLE` values (0, '2020-12-31', '2020-03-01', 1, 3, 560, 9.5);
+insert into `STAT_TABLE` values (0, '2020-12-31', '2020-04-01', 1, 3, 599, 15.1);
+insert into `STAT_TABLE` values (0, '2020-12-31', '2020-05-01', 1, 3, 325, 18.9);
+insert into `STAT_TABLE` values (0, '2020-12-31', '2020-06-01', 1, 3, 429, 21.4);
+insert into `STAT_TABLE` values (0, '2020-12-31', '2020-07-01', 1, 3, 600, 23.7);
+insert into `STAT_TABLE` values (0, '2020-12-31', '2020-08-01', 1, 3, 719, 21.6);
+insert into `STAT_TABLE` values (0, '2020-12-31', '2020-09-01', 1, 3, 502, 14.54);
+insert into `STAT_TABLE` values (0, '2020-12-31', '2020-10-01', 1, 3, 312, 15.22);
+insert into `STAT_TABLE` values (0, '2020-12-31', '2020-11-01', 1, 3, 213, 10.39);
+insert into `STAT_TABLE` values (0, '2020-12-31', '2020-12-01', 1, 3, 451, 8.11);
+
+
 -- ----------------------------------------------
 -- 드림테크 회사에서의 사과잼 데이터 생성
 -- ----------------------------------------------
@@ -195,6 +230,8 @@ insert into `SALE_TABLE` values (0,'2020-06-17 00:00:00',1,3,2);
 insert into `SALE_TABLE` values (0,'2020-06-18 00:00:00',1,3,8);
 insert into `SALE_TABLE` values (0,'2020-06-19 00:00:00',1,3,4);
 insert into `SALE_TABLE` values (0,'2020-06-20 00:00:00',1,3,2);
+
+
 insert into `SALE_TABLE` values (0,'2020-06-21 00:00:00',1,3,2);
 insert into `SALE_TABLE` values (0,'2020-06-22 00:00:00',1,3,5);
 insert into `SALE_TABLE` values (0,'2020-06-23 00:00:00',1,3,3);

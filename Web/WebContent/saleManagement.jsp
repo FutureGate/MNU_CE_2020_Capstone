@@ -47,20 +47,60 @@
 				</h3>
 				
 				
-				<div class ="ui segment" id="viewSegment">
+				<div class ="ui segment">
 					<div class="ui grid">
 						<div class="row">
-							<div class="four wide left aligned column">
+							<div class="six wide left aligned column">
 								<div class="ui form">
 									<div class="field">
-						  				<div class="ui icon input">
+										<label>상품 이름</label>
+									
+						  				<div class="ui input">
 									  		<input type="text" name="search" id="searchInput" placeholder="상품 이름">
-									  		<i class="inverted circular search link icon" id="searchButton"></i>
 										</div>
 									</div>
 								</div>
 							</div>
-							<div class="twelve wide right aligned column">
+							
+							<div class="ten wide left aligned column">
+								<div class="ui form">
+									<div class="ui grid">
+										<div class="ui row">
+											<div class="ui eight wide column">
+												<div class="field">
+													<label>시작일</label>
+												
+									  				<div class="ui input">
+												  		<input type="date" name="startDate" id="startDateInput" placeholder="시작일">
+													</div>
+												</div>
+											</div>
+											
+											<div class="ui eight wide column">
+												<div class="field">
+													<label>종료일</label>
+													
+													<div class="ui input">
+										  				<input type="date" name="endDate" id="endDateInput" placeholder="종료일">
+										  			</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div style="text-align:right; margin-top:20px">
+						<i class="inverted circular search link icon" id="searchButton"></i>
+					</div>
+				</div>
+				
+				<div class ="ui segment" id="viewSegment">
+					<div class="ui grid">
+						<div class="row">
+							<div class="right aligned column">
 								<div class="ui small basic icon buttons">
 							  		<button class="ui button disabled" id="addButton"><i class="plus icon"></i></button>
 							 		<button class="ui button disabled" id="deleteButton"><i class="minus icon"></i></button>
@@ -163,6 +203,9 @@
 		var shopID = '<%= shopID %>';
 		var search = '';
 	
+		var startDate = '';
+		var endDate = '';
+		
 		viewSegment = $('#viewSegment');
 		inputSegment = $('#inputSegment');
 		
@@ -178,6 +221,9 @@
 		itemNameInput = $('#itemNameInput');
 		saleCountInput = $('#saleCountInput');
 		searchInput = $('#searchInput');
+		
+		startDateInput = $('#startDateInput');
+		endDateInput = $('#endDateInput');
 		
 		viewSegment = $('#viewSegment');
 		
@@ -203,6 +249,13 @@
 		});
 		
 		function initialize() {
+			endDate = new Date();
+			startDate = new Date();
+			startDate.setDate(endDate.getDate() - 7);
+			
+			startDateInput.val(toFormattedDate(startDate));
+			endDateInput.val(toFormattedDate(endDate));
+			
 			setInputState(false);
 			setListener();
 			
@@ -228,8 +281,24 @@
 			});
 		 	
 		 	search = searchInput.val();
+		 	startDate = startDateInput.val();
+		 	endDate = endDateInput.val();
 		 	
-		 	loadTableData(search);
+		 	loadTableData(search, startDate, endDate);
+		}
+		
+		function toFormattedDate(date) {
+		    var d = new Date(date),
+		        month = '' + (d.getMonth() + 1),
+		        day = '' + d.getDate(),
+		        year = d.getFullYear();
+
+		    if (month.length < 2) 
+		        month = '0' + month;
+		    if (day.length < 2) 
+		        day = '0' + day;
+
+		    return [year, month, day].join('-');
 		}
 		
 		function setListener() {
@@ -243,9 +312,12 @@
 		
 		function setLoading(state) {
 			if(state == true) {
+				searchButton.removeClass('link');
 				viewSegment.addClass('loading');
 			} else {
+				searchButton.addClass('link');
 				viewSegment.removeClass('loading');
+				
 			}
 		}
 		
@@ -330,9 +402,7 @@
 		
 		function saveButtonListener() {
 			saveData();
-			setInputState(false);
 			
-			addButton.removeClass('disabled');
 		}
 		
 		function resetButtonListener() {
@@ -345,13 +415,16 @@
 		}
 		
 		function searchButtonListener() {
-			search = searchInput.val();
-			
 			addButton.addClass('disabled');
 			deleteButton.addClass('disabled');
 			
 			resetTable();
-			loadTableData(search);
+			
+			search = searchInput.val();
+		 	startDate = startDateInput.val();
+		 	endDate = endDateInput.val();
+		 	
+		 	loadTableData(search, startDate, endDate);
 		}
 		
 		function itemSearchButtonListener() {
@@ -359,15 +432,17 @@
 			
 		}
 		
-		function loadTableData(search) {
+		function loadTableData(search, startDate, endDate) {
 			setLoading(true);
 			
 			$.ajax({
 				url: "saleSearchAction.do", 
 				type: "POST",
 				data : {
-					shopID: encodeURIComponent(shopID),
-					itemName: encodeURIComponent(search)
+					shopID: shopID,
+					itemName: search,
+					startDate: startDate,
+					endDate: endDate
 				},
 				success: function(data) {
 					if(data == "") {
@@ -406,7 +481,6 @@
 		}
 		
 		function saveData() {
-			
 			var saleDate = saleDateInput.val();
 			var saleCount = saleCountInput.val();
 			var itemID = itemIDInput.val();
@@ -425,9 +499,16 @@
 				},
 				success: function(data) {
 					search = searchInput.val();
-					loadTableData(search);
+				 	startDate = startDateInput.val();
+				 	endDate = endDateInput.val();
+				 	
+				 	loadTableData(search, startDate, endDate);
+					
 					isEditing = false;
 					isSelected = false;
+					
+					setInputState(false);
+					addButton.removeClass('disabled');
 				},
 				error: function (req, status, error) {
 					if(req.status == 566) {
@@ -492,10 +573,7 @@
 		}
 		
 		function scrollDisable(){
-			$('html').addClass('no-scroll').on('scroll touchmove mousewheel', function(e){
-		        e.preventDefault();
-		    });
-		    $('html, body').addClass('no-scroll');
+			
 		}
 		
 		

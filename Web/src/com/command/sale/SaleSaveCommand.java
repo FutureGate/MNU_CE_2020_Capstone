@@ -49,6 +49,8 @@ public class SaleSaveCommand implements Command {
 				
 				if(saleID.equals("0")) {
 					dao.add("0", saleDate, shopID, itemID, saleCount);
+					
+					System.out.println("!!");
 				} else {
 					dao.modify(saleID, saleDate, itemID, saleCount);
 				}

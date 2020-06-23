@@ -10,7 +10,7 @@ def get_sale_array(shop_id, item_id):
 
     cursor = db.cursor()
 
-    sql = "select * from sale_table where shop_id=" + str(shop_id) + " and item_id=" + str(item_id) + ";"
+    sql = "select * from sale_table where sale_date < now() and shop_id=" + str(shop_id) + " and item_id=" + str(item_id) + ";"
 
     cursor.execute(sql)
 

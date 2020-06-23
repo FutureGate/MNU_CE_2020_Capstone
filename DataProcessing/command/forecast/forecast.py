@@ -20,7 +20,10 @@ from sklearn.metrics import mean_squared_error
 from tensorflow.keras.callbacks import ModelCheckpoint
 from tensorflow.keras.models import model_from_json
 
-weight_path = os.getcwd() + '/../../weights/'
+from model.forecast import forecastDAO
+from model.request import requestDAO
+
+weight_path = 'C:/weights/'
 
 
 def create_date_list(start_date, end_date):
@@ -44,6 +47,7 @@ def str_to_int_date(date):
 
     return year, month, day
 
+
 def start_train(shop_id, item_id):
     filename = ''
     model_filename = ''
@@ -53,6 +57,8 @@ def start_train(shop_id, item_id):
     df = saleDAO.get_sale_array(shop_id, item_id)
     df.drop("shopID", axis=1, inplace=True)
     df.drop("itemID", axis=1, inplace=True)
+
+    print(df)
 
     # 판매량이 없는 날짜 0으로 채우기
 
@@ -119,7 +125,7 @@ def start_train(shop_id, item_id):
     model.compile(loss='mean_squared_error', optimizer='adam', metrics=['accuracy'])
 
     # 학습
-    model.fit(trainX, trainY, epochs=500, batch_size=1, verbose=1)
+    model.fit(trainX, trainY, epochs=10, batch_size=1, verbose=1)
 
     model_filename = weight_path + str(shop_id) + '_' + str(item_id) + '.json'
     weight_filename = weight_path + str(shop_id) + '_' + str(item_id) + '.h5'
@@ -141,6 +147,9 @@ def start_predict(shop_id, item_id):
     weight_filename = weight_path + str(shop_id) + '_' + str(item_id) + '.h5'
 
     if not (os.path.isfile(model_filename) or os.path.isfile(weight_filename)):
+        start_train(shop_id, item_id)
+
+    if check_trained(shop_id, item_id) is False:
         start_train(shop_id, item_id)
 
     json_file = open(model_filename, 'r')
@@ -168,35 +177,31 @@ def start_predict(shop_id, item_id):
     df.fillna(0, inplace=True)
     df['saleDate'] = pd.to_datetime(df['saleDate'], format='%Y-%m-%d')
 
-    # train, test 셋 나누기
-    total_idx = len(df) - 1
-    train_idx = int(total_idx * 0.7)
-    test_idx = total_idx - train_idx
-
-    # print(total_idx, '@', train_idx, '@', test_idx)
-    np.random.seed(7)
-
-    df['saleDate'] = pd.to_datetime(df['saleDate'], format='%Y-%m-%d')
-    train, test = df[:train_idx], df[train_idx:total_idx]
-
-    train = train.set_index("saleDate")
-    test = test.set_index("saleDate")
     df = df.set_index("saleDate")
-    train = train.values
-    test = test.values
     df = df.values
 
     # 데이터 셋 생성
     look_back = 7
-    trainX, trainY = create_dataset(train, look_back)
-    testX, testY = create_dataset(test, look_back)
 
-    trainX = np.reshape(trainX, (trainX.shape[0], 1, trainX.shape[1]))
-    testX = np.reshape(testX, (testX.shape[0], 1, testX.shape[1]))
+    idx = look_back * -1;
 
-    testPredict = model.predict(testX)
+    test_data = []
+    a = df[idx:, 0]
+    test_data.append(a)
 
-    print(testPredict)
+    result = []
+
+    for i in range(0, 10):
+        data = test_data
+
+        data = np.reshape(data, (data.shape[0], 1, data.shape[1]))
+        prediction = model.predict(data)
+        result.append(prediction)
+
+        test_data.pop(0)
+        test_data.append(prediction)
+
+    print(result)
 
 
 def create_dataset(dataset, look_back=1):
@@ -207,5 +212,14 @@ def create_dataset(dataset, look_back=1):
         dataY.append(dataset[i + look_back, 0])
     return np.array(dataX), np.array(dataY)
 
+def check_trained(shop_id, item_id):
+    current_time = datetime.now()
+    target_time = requestDAO.get_recently_trained_request_date(shop_id, item_id)
+
+    if (current_time - target_time).days >= 7:
+        return False
+
+    return True
 
 
+start_predict(1, 3)

@@ -11,14 +11,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.command.Command;
+import com.command.forecast.ForecastSearchCommand;
 import com.command.item.ItemDeleteCommand;
 import com.command.item.ItemSaveCommand;
 import com.command.item.ItemSearchCommand;
+import com.command.request.RequestSearchCommand;
 import com.command.sale.SaleDeleteCommand;
 import com.command.sale.SaleFormDownloadCommand;
 import com.command.sale.SaleSaveCommand;
 import com.command.sale.SaleSearchCommand;
 import com.command.sale.SaleUploadCommand;
+import com.command.stat.StatSearchCommand;
 import com.command.user.UserLoginCommand;
 import com.command.user.UserSettingShopSaveCommand;
 import com.command.user.UserSettingUserPasswordSaveCommand;
@@ -105,14 +108,13 @@ public class Controller extends HttpServlet {
 		} else if(user == null || user.getUserID() == null) {
 			forward = new ForwardingAction(true, "login.do");
 		
-		// 메인 페이지로 가도록 하는 페이지
+			
+			
+			
+		// 메인 페이지로 가도록 하는 페이지 ===================================================================================================
 		} else if(page.equals("/goHome.do")) {
 			forward = new ForwardingAction(true, "dashboard.do");
 	
-		// 대시보드 페이지
-		} else if (page.equals("/dashboard.do")) {
-			forward = new ForwardingAction(false, "dashboard.jsp");
-			
 			
 		// 회원 정보 수정 처리 페이지
 		} else if (page.equals("/userSetting.do")) {
@@ -136,6 +138,27 @@ public class Controller extends HttpServlet {
 			cmd = new UserSettingShopSaveCommand();
 			
 			forward = cmd.execute(req, res);
+			
+			
+		/* ===========================================
+		
+		대시보드 관련 페이지
+		
+		============================================= */ 	
+			
+			
+		// 대시보드 페이지
+		} else if (page.equals("/dashboard.do")) {
+			forward = new ForwardingAction(false, "dashboard.jsp");
+			
+			
+		} else if (page.equals("/dashboardRequestSearch.do")) {
+			cmd = new RequestSearchCommand();
+			
+			forward = cmd.execute(req, res);
+			
+			
+			
 		/* ===========================================
 		
 		모니터링 관련 페이지
@@ -143,10 +166,22 @@ public class Controller extends HttpServlet {
 		============================================= */ 	
 			
 		// 모니터링 관련 페이지 및 기능
-    	}else if (page.equals("/monitoringItem.do")) {
-			
-			// (임시)
+    	} else if (page.equals("/monitoringItem.do")) {
 			forward = new ForwardingAction(false, "monitoringItem.jsp");
+			
+		// 제품별 모니터링 -> 예측 조회
+		} else if (page.equals("/monitoringItemForecastSearch.do")) {
+			cmd = new ForecastSearchCommand();
+			
+			forward = cmd.execute(req, res);
+			
+		// 제품별 모니터링 -> 통계 조회
+		} else if (page.equals("/monitoringItemStatSearch.do")) {
+			cmd = new StatSearchCommand();
+			
+			forward = cmd.execute(req, res);
+		
+		
 		} else if (page.equals("/monitoringMonthly.do")) {
 			
 			// (임시)

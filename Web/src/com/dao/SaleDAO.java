@@ -50,16 +50,18 @@ public class SaleDAO {
 		return null;
 	}
 	
-	public ArrayList<SaleDTO> getSaleList(String shopID) {
+	public ArrayList<SaleDTO> getSaleList(String shopID, String startDate, String endDate) {
 		ArrayList<SaleDTO> list = new ArrayList<SaleDTO>();
 		
-		String sql = "select * from sale_table where shop_id = ? order by sale_date desc";
+		String sql = "select * from sale_table where shop_id = ? and sale_date >= ? and sale_date <= ? order by sale_date desc";
 		
 		try {
 			conn = DBConnector.getInstance().getConnector();
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, shopID);
+			pstmt.setString(2, startDate);
+			pstmt.setString(3, endDate);
 			
 			ResultSet rs = pstmt.executeQuery();
 			
@@ -82,17 +84,23 @@ public class SaleDAO {
 		return list;
 	}
 
-	public ArrayList<SaleDTO> getSaleListByItemName(String shopID, String itemName) {
+	public ArrayList<SaleDTO> getSaleListByInfo(String shopID, String itemName, String startDate, String endDate) {
 		ArrayList<SaleDTO> list = new ArrayList<SaleDTO>();
 		
-		String sql = "select * from sale_table where shop_id = ? and item_name = ? order by sale_date desc";
+		itemName = "%" + itemName + "%";
+		
+		String sql = "select * from sale_table, item_table where sale_table.item_id = item_table.item_id and sale_table.shop_id = ? and item_name like ? and sale_date >= ? and sale_date <= ? order by sale_date desc";
 		
 		try {
+			ItemDAO itemDAO = new ItemDAO();
+			
 			conn = DBConnector.getInstance().getConnector();
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, shopID);
 			pstmt.setString(2, itemName);
+			pstmt.setString(3, startDate);
+			pstmt.setString(4, endDate);
 			
 			ResultSet rs = pstmt.executeQuery();
 			

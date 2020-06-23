@@ -71,6 +71,7 @@ create table REQUEST_TABLE (
     `item_id`						integer not null,
     `request_date`					date not null,
     `state`							varchar(20),
+    `trained`						integer not null,
     primary key(request_id),
     foreign key (shop_id) references SHOP_TABLE (shop_id),
     foreign key (item_id) references ITEM_TABLE (item_id)
@@ -100,12 +101,14 @@ create table FORECAST_TABLE (
 -- ----------------------------------------------
 
 create table STAT_TABLE (
-    `shop_id`					integer not null,
-    `item_id`					integer not null,
+	`stat_id`					integer auto_increment not null,
     `base_date`					date not null,
     `stat_date`					date not null,
+    `shop_id`					integer not null,
+    `item_id`					integer not null,
 	`sum`						integer not null,
-    `avg`						integer not null,
+    `avg`						float(5, 2) not null,
+    primary key(stat_id),
     foreign key (shop_id) references SHOP_TABLE (shop_id),
     foreign key (item_id) references ITEM_TABLE (item_id)
 ) default character set utf8mb4 collate utf8mb4_bin;
