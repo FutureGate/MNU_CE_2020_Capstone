@@ -55,6 +55,10 @@
 
 				<div class="ui divider"></div>
 
+				<div class="ui red message" id="errorMessage">
+					
+				</div>
+
 				<div class="ui segment" id="viewSegment">
 					<h4 class="ui header left aligned">
 						<div class="content">
@@ -193,6 +197,8 @@
 		var statSumContext = document.getElementById('statSumChart').getContext('2d');
 		var statAvgContext = document.getElementById('statAvgChart').getContext('2d');
 		
+		var errorMessage = $('#errorMessage');
+		
 		var forecastChart = null;
 		var statSumChart = null;
 		var statAvgChart = null;
@@ -306,6 +312,9 @@
 			
 		$(document).ready(function() {
 			init();
+			
+			errorMessage.hide();
+			
 			setListener();
 		});
 	
@@ -341,10 +350,13 @@
 		}
 		
 		function searchData() {
+			resetChart();
 			forecastSearch();
 		}
 		
 		function forecastSearch() {
+			
+			errorMessage.hide();
 			itemID = itemIDInput.val();
 			
 			$.ajax({
@@ -356,7 +368,8 @@
 				},
 				success: function(data) {
 					if(data == "") {
-						alert("해당 결과가 존재하지 않습니다.");
+						errorMessage.show();
+						errorMessage.html('해당결과가 존재하지 않습니다.');
 						return;
 					}
 
@@ -367,7 +380,8 @@
 					forecastSegment.removeClass('disabled');
 				},
 				error: function(xtr, status, error) {
-					alert('error');
+					errorMessage.show();
+					errorMessage.html('에러 발생');
 				},
 				complete: function(data) {
 					searchButton.removeClass('loading');
@@ -391,7 +405,8 @@
 				},
 				success: function(data) {
 					if(data == "") {
-						alert("해당 결과가 존재하지 않습니다.");
+						errorMessage.show();
+						errorMessage.html('해당결과가 존재하지 않습니다.');
 						return;
 					}
 
@@ -411,6 +426,26 @@
 					searchButton.removeClass('disabled');
 				}
 			});
+		}
+		
+		function resetChart() {
+			var labels = [];
+			var datasets = [];
+			
+			forecastChartConfig.data.datasets = datasets;
+			forecastChartConfig.data.labels = labels;
+			
+			forecastChart.update();
+			
+			statSumChartConfig.data.datasets = datasets;
+			statSumChartConfig.data.labels = labels;
+			
+			statSumChart.update();
+			
+			statAvgChartConfig.data.datasets = datasets;
+			statAvgChartConfig.data.labels = labels;
+			
+			statAvgChart.update();
 		}
 		
 		function updateForecastChart(result) {

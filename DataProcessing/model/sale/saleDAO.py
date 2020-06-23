@@ -31,5 +31,8 @@ def get_sale_array(shop_id, item_id):
 
     df = df.drop('saleID', axis=1)
 
+    cursor.close()
+    db.close()
+
     return df
 

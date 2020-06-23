@@ -21,24 +21,7 @@
   <component name="ChangeListManager">
     <list default="true" id="3de5fd16-d5a4-4966-87c4-fc891359a232" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/command/forecast/forecast.py" beforeDir="false" afterPath="$PROJECT_DIR$/command/forecast/forecast.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/command/forecast/lstm.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/command/statistics/stat.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/command/statistics/statistics.py" beforeDir="false" afterPath="$PROJECT_DIR$/command/statistics/statistics.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/forecast/forecastDAO.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/forecast/forecastDAO.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/forecast/forecastDTO.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/statistics/statDAO.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/request/requestDAO.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/request/requestDAO.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/sale/saleDAO.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/sale/saleDAO.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weights/readme.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Web/WebContent/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Web/WebContent/WEB-INF/web.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Web/WebContent/dashboard.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/../Web/WebContent/dashboard.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Web/WebContent/saleManagement.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/../Web/WebContent/saleManagement.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Web/src/com/dao/ForecastDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Web/src/com/dao/ForecastDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Web/src/com/dao/StatDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Web/src/com/dao/StatDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Web/src/com/dto/ForecastDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Web/src/com/dto/ForecastDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../database.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../database.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../test_data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../test_data.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
