@@ -71,7 +71,7 @@
 													<label>시작일</label>
 												
 									  				<div class="ui input">
-												  		<input type="date" name="startDate" id="startDateInput" placeholder="시작일">
+												  		<input type="date" name="startDate" id="startDateInput" onChange="onDateChangeListener();" placeholder="시작일">
 													</div>
 												</div>
 											</div>
@@ -81,7 +81,7 @@
 													<label>종료일</label>
 													
 													<div class="ui input">
-										  				<input type="date" name="endDate" id="endDateInput" placeholder="종료일">
+										  				<input type="date" name="endDate" id="endDateInput" onChange="onDateChangeListener();" placeholder="종료일">
 										  			</div>
 												</div>
 											</div>
@@ -370,7 +370,42 @@
 		}
 		
 		function onChangeListener() {
+			saleDate = saleDateInput.val();
+			
+			saleDate = new Date(saleDate);
+			nowDate = new Date();
+			
+			diff1 = new Date(saleDate.getFullYear(), saleDate.getMonth(), saleDate.getDate());
+		    diff2 = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate());
+			
+		    if((diff2.getTime() - diff1.getTime()) < 0) {
+		    	alert('현재 시각보다 이전일을 설정하여야 합니다.');
+		    	
+		    	diff2.setDate(diff2.getDate() - 1);
+		    	
+		    	saleDateInput.val(toFormattedDate(diff2));
+		    }
+		    
 			isEditing = true;
+		}
+		
+		function onDateChangeListener() {
+			startDate = startDateInput.val();
+			endDate = endDateInput.val();
+			
+			startDate = new Date(startDate);
+			endDate = new Date(endDate);
+			
+			diff1 = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+		    diff2 = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
+
+		    if((diff2.getTime() - diff1.getTime()) < 0) {
+		    	alert('시작일이 종료일보다 클 수 없습니다.');
+		    	
+		    	diff2.setDate(diff2.getDate() - 1);
+		    	
+		    	startDateInput.val(toFormattedDate(diff2));
+		    }
 		}
 		
 		function addButtonListener() {

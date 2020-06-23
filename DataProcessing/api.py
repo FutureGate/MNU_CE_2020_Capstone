@@ -8,17 +8,16 @@ import time
 import threading
 
 from command.forecast import forecast
+from command.statistics import statistics
+
 from model.request import requestDAO
+from model.forecast import forecastDAO
 
 # =====================================================================
 # config
 # =====================================================================
 app = Flask(__name__)
 CORS(app)
-
-current_request_id = -1
-current_shop_id = -1
-current_item_id = -1
 
 # =====================================================================
 # variables
@@ -42,32 +41,18 @@ def process():
     shop_id = request.form.get('shopID')
     item_id = request.form.get('itemID')
 
+    check = do_check(shop_id, item_id)
+
+    if check is 0:
+        return {'error': 'error'}, 578
+    elif check is -1:
+        return {'error': 'error'}, 577
+
     request_id = requestDAO.add(shop_id, item_id)
 
-    global current_shop_id
-    global current_item_id
-    global current_request_id
-
-    current_request_id = request_id
-    current_shop_id = shop_id
-    current_item_id = item_id
+    do_predict(shop_id, item_id, request_id)
 
     return {'result': 'success'}
-
-
-@app.teardown_request
-def teardown_request(response):
-    global current_shop_id
-    global current_item_id
-    global current_request_id
-
-    do_predict(current_shop_id, current_item_id, current_request_id)
-
-    current_request_id = -1
-    current_shop_id = -1
-    current_item_id = -1
-
-    return response
 
 
 # =====================================================================
@@ -85,11 +70,17 @@ def do_predict(shop_id, item_id, request_id):
 def do_process(shop_id, item_id, request_id):
 
     try:
-        forecast.start_predict(shop_id, item_id)
+        statistics.start_stat(shop_id, item_id, request_id)
+
+        forecast.start_predict(shop_id, item_id, request_id)
 
         requestDAO.setState(request_id, '완료')
     except:
         requestDAO.setState(request_id, '오류 발생')
+
+
+def do_check(shop_id, item_id):
+    return forecastDAO.check_base_date(shop_id, item_id)
 
 
 # =====================================================================

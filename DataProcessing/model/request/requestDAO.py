@@ -1,9 +1,8 @@
 import numpy as np
 import pandas as pd
-import datetime
+from datetime import datetime
 
 from util.DBConnector import DBConnector
-
 
 # 요청 상태 종류
 # - 처리 중
@@ -42,7 +41,7 @@ def get_recently_trained_request_date(shop_id, item_id):
     cursor = db.cursor()
 
     sql = 'select * from request_table where trained = 1 and shop_id = ' + \
-          str(shop_id) + 'and item_id = ' + str(item_id) + ' order by request_date desc;'
+          str(shop_id) + ' and item_id = ' + str(item_id) + ' order by request_date desc;'
 
     cursor.execute(sql)
 
@@ -66,10 +65,8 @@ def add(shop_id, item_id):
 
     cursor = db.cursor()
 
-    now = datetime.datetime.now()
+    now = datetime.now()
     request_date = now.strftime('%Y-%m-%d')
-
-    print(type(request_date))
 
     sql = 'insert into request_table values (' + \
           str(0) + ',' + \
@@ -79,8 +76,6 @@ def add(shop_id, item_id):
           '\'처리 중\'' + \
           ', 0' + \
           ');'
-
-    print(sql)
 
     cursor.execute(sql)
     db.commit()
@@ -112,7 +107,7 @@ def setTrained(request_id, trained):
     cursor = db.cursor()
 
     sql = 'update request_table set trained = \'' + \
-          trained + '\' where request_id = ' + str(request_id) + ';'
+          str(trained) + '\' where request_id = ' + str(request_id) + ';'
 
     cursor.execute(sql)
     db.commit()

@@ -21,6 +21,9 @@ def get_sale_array(shop_id, item_id):
     for data in result:
         sale_list.append(data)
 
+    if len(sale_list) is 0:
+        return None
+
     sale_array = np.asarray(sale_list)
 
     df = pd.DataFrame(sale_array,

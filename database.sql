@@ -89,7 +89,7 @@ create table FORECAST_TABLE (
     `sale_date`					date not null,
 	`shop_id`					integer not null,
     `item_id`					integer not null,
-    `sale_count`				integer not null,
+    `sale_count`				float(5, 2) not null,
     primary key(forecast_id),
     foreign key (shop_id) references SHOP_TABLE (shop_id),
     foreign key (item_id) references ITEM_TABLE (item_id)

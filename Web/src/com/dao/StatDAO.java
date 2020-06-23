@@ -45,7 +45,7 @@ public class StatDAO {
 		
 		ArrayList<StatDTO> list = null;
 		
-		String sql = "select * from stat_table where shop_id = ? and item_id = ? and base_date = ? order by stat_date desc";
+		String sql = "select * from stat_table where shop_id = ? and item_id = ? and base_date = ? order by stat_date";
 		
 		try {
 			conn = DBConnector.getInstance().getConnector();

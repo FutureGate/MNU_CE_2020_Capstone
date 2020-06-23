@@ -60,7 +60,7 @@
 					<h4 class="ui header left aligned">
 						<div class="content">
 							<i class="clipboard outline icon"></i>
-							엑셀 파일 양식 받기
+							엑셀 파일 양식 받기  <i class="question circle line link icon" id="infoButton"></i>
 						</div>
 					</h4>
 					
@@ -78,6 +78,37 @@
 			</div>
 		</div>
 		
+		<div class="ui modal" id="infoModal">
+			<div class="header">
+				도움말
+		  	</div>
+			 
+			<div class="content">
+			    <div class="description">
+			    	<ul>
+			    		<li>
+			    			파일 확장자는 .xlsx파일과 .xls 파일만 지원합니다.
+			    		</li>
+			    		
+			    		<li>
+			    			엑셀 파일은 반드시 파일과 동일하게 ("판매일자", "상품번호", "판매수량") 순으로 구성되어야 합니다.
+			    		</li>
+			    		
+			    		<li>
+			    			상품 정보 관리에서 등록되지 않은 상품은 업로드 할 수 없습니다.
+			    		</li>
+			    	</ul>
+		    	</div>
+		  	</div>
+			  	
+		  	<div class="actions">
+			    <div class="ui positive right labeled icon button">
+			    	확인
+			      	<i class="checkmark icon"></i>
+			    </div>
+		  	</div>
+		</div>
+		
 		<jsp:include page="./fragment/footer.jsp"></jsp:include>
 	</div>
 
@@ -93,6 +124,9 @@
 
 
 	<script>
+		var infoButton = $('#infoButton');
+		var infoModal = $('#infoModal');
+	
 		$(function() {
 			$.fn.filepond.registerPlugin(
 	    		FilePondPluginFileEncode,
@@ -151,6 +185,12 @@
 				console.log(error.body, ',', error.code);
 				console.log(error);
 		    });
+			
+			infoButton.click(infoButtonListener);
+		}
+		
+		function infoButtonListener() {
+			infoModal.modal('show');
 		}
 		
 	</script>

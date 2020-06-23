@@ -49,9 +49,7 @@ public class SaleUploadCommand implements Command {
 			
 			ArrayList<SaleDTO> saleList = null;
 			
-			if(ext.equals("xlsx")) {
-				saleList = ExcelUtil.getInstance().excelFileCheck(file, shopID, new ItemDAO());
-			}
+			saleList = ExcelUtil.getInstance().excelFileCheck(file, shopID, new ItemDAO());
 			
 			if(saleList == null) {
 				

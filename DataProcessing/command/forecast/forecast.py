@@ -3,7 +3,9 @@ import pandas as pd
 import seaborn as sns
 import math
 
-import gc;gc.collect
+import gc;
+
+gc.collect
 
 from datetime import date, datetime
 
@@ -48,17 +50,20 @@ def str_to_int_date(date):
     return year, month, day
 
 
-def start_train(shop_id, item_id):
+def start_train(shop_id, item_id, request_id):
     filename = ''
     model_filename = ''
     weight_filename = ''
 
     # 데이터 로드
     df = saleDAO.get_sale_array(shop_id, item_id)
+
+    if df is None:
+        requestDAO.setState(request_id, '오류 발생')
+        return
+
     df.drop("shopID", axis=1, inplace=True)
     df.drop("itemID", axis=1, inplace=True)
-
-    print(df)
 
     # 판매량이 없는 날짜 0으로 채우기
 
@@ -137,8 +142,10 @@ def start_train(shop_id, item_id):
 
     model.save_weights(weight_filename)
 
+    requestDAO.setTrained(request_id, 1)
 
-def start_predict(shop_id, item_id):
+
+def start_predict(shop_id, item_id, request_id):
     filename = ''
     model_filename = ''
     weight_filename = ''
@@ -147,10 +154,10 @@ def start_predict(shop_id, item_id):
     weight_filename = weight_path + str(shop_id) + '_' + str(item_id) + '.h5'
 
     if not (os.path.isfile(model_filename) or os.path.isfile(weight_filename)):
-        start_train(shop_id, item_id)
+        start_train(shop_id, item_id, request_id)
 
     if check_trained(shop_id, item_id) is False:
-        start_train(shop_id, item_id)
+        start_train(shop_id, item_id, request_id)
 
     json_file = open(model_filename, 'r')
 
@@ -165,6 +172,8 @@ def start_predict(shop_id, item_id):
 
     # 데이터 로드
     df = saleDAO.get_sale_array(shop_id, item_id)
+
+    base_date = datetime.strftime(df.iloc[-1:]['saleDate'].values[0], "%Y-%m-%d")
 
     # 판매량이 없는 날짜 0으로 채우기
     date_list = np.unique(df['saleDate'])
@@ -183,43 +192,58 @@ def start_predict(shop_id, item_id):
     # 데이터 셋 생성
     look_back = 7
 
-    idx = look_back * -1;
+    idx = look_back * -1
 
     test_data = []
-    a = df[idx:, 0]
+    a = df[idx:, 2]
     test_data.append(a)
 
     result = []
 
+    data = np.array(test_data)
+
     for i in range(0, 10):
-        data = test_data
 
         data = np.reshape(data, (data.shape[0], 1, data.shape[1]))
+
         prediction = model.predict(data)
-        result.append(prediction)
+        result.append(prediction[0])
 
-        test_data.pop(0)
-        test_data.append(prediction)
+        temp = data[0, 0]
+        temp = list(temp)
 
-    print(result)
+        temp.pop(0)
+
+        temp.append(prediction[0, 0])
+        temp = np.array(temp)
+        temp = temp.astype(float)
+
+        data = np.array(temp)
+
+        data = np.reshape(data, (1, data.shape[0]))
+
+    forecastDAO.insert(result, base_date, shop_id, item_id)
 
 
 def create_dataset(dataset, look_back=1):
     dataX, dataY = [], []
-    for i in range(len(dataset)-look_back-1):
-        a = dataset[i:(i+look_back), 0]
+    for i in range(len(dataset) - look_back - 1):
+        a = dataset[i:(i + look_back), 0]
         dataX.append(a)
         dataY.append(dataset[i + look_back, 0])
     return np.array(dataX), np.array(dataY)
+
 
 def check_trained(shop_id, item_id):
     current_time = datetime.now()
     target_time = requestDAO.get_recently_trained_request_date(shop_id, item_id)
 
+    if target_time is None:
+        return False
+
+    target_time = datetime.strptime(target_time, "%Y-%m-%d")
+
     if (current_time - target_time).days >= 7:
         return False
 
     return True
-
-
-start_predict(1, 3)

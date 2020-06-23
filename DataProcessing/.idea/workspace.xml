@@ -23,21 +23,20 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/api.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/command/forecast/forecast.py" beforeDir="false" afterPath="$PROJECT_DIR$/command/forecast/forecast.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/command/forecast/lstm.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/command/statistics/stat.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/command/statistics/statistics.py" beforeDir="false" afterPath="$PROJECT_DIR$/command/statistics/statistics.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/forecast/forecastDAO.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/forecast/forecastDAO.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/forecast/forecastDTO.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/statistics/statDAO.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/request/requestDAO.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/request/requestDAO.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/sale/saleDAO.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/sale/saleDAO.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weights/readme.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Web/WebContent/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Web/WebContent/WEB-INF/web.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Web/WebContent/dashboard.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/../Web/WebContent/dashboard.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Web/WebContent/fragment/sidebar.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/../Web/WebContent/fragment/sidebar.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Web/WebContent/monitoringItem.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/../Web/WebContent/monitoringItem.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Web/WebContent/saleManagement.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/../Web/WebContent/saleManagement.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Web/build/classes/com/command/sale/SaleSaveCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Web/build/classes/com/command/sale/SaleSaveCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Web/build/classes/com/command/sale/SaleSearchCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Web/build/classes/com/command/sale/SaleSearchCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Web/build/classes/com/controller/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Web/build/classes/com/controller/Controller.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Web/build/classes/com/dao/SaleDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Web/build/classes/com/dao/SaleDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Web/src/com/command/sale/SaleSaveCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Web/src/com/command/sale/SaleSaveCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Web/src/com/command/sale/SaleSearchCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Web/src/com/command/sale/SaleSearchCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Web/src/com/controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Web/src/com/controller/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Web/src/com/dao/SaleDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Web/src/com/dao/SaleDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Web/src/com/dao/ForecastDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Web/src/com/dao/ForecastDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Web/src/com/dao/StatDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Web/src/com/dao/StatDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Web/src/com/dto/ForecastDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Web/src/com/dto/ForecastDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../database.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../database.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../test_data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../test_data.sql" afterDir="false" />
     </list>
@@ -83,14 +82,14 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\GITHUB\MNU_CE_2020_Capstone\DataProcessing\model" />
       <recent name="D:\##GITHUB\MNU_CE_2020_Capstone\DataProcessing\command\statistics" />
       <recent name="D:\##GITHUB\MNU_CE_2020_Capstone\DataProcessing\command\forecast" />
       <recent name="D:\##GITHUB\MNU_CE_2020_Capstone\DataProcessing\config" />
       <recent name="D:\##GITHUB\MNU_CE_2020_Capstone\DataProcessing\forecast" />
-      <recent name="C:\GITHUB\MNU_CE_2020_Capstone\DataProcessing\db" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.forecast">
+  <component name="RunManager" selected="Python.api">
     <configuration name="api" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="DataProcessing" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -104,27 +103,6 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/api.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="data_insert" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="DataProcessing" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data_insert.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -196,13 +174,34 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="statistics" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="DataProcessing" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/command/statistics" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/command/statistics/statistics.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.forecast" />
         <item itemvalue="Python.api" />
+        <item itemvalue="Python.statistics" />
+        <item itemvalue="Python.forecast" />
         <item itemvalue="Python.requestDAO" />
         <item itemvalue="Python.saleDAO" />
-        <item itemvalue="Python.data_insert" />
       </list>
     </recent_temporary>
   </component>
@@ -270,22 +269,22 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="1011" y="312" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1592591630386" />
-    <state width="1899" height="283" key="GridCell.Tab.0.bottom" timestamp="1592922572154">
+    <state width="1899" height="283" key="GridCell.Tab.0.bottom" timestamp="1592944675924">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="283" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1592922572154" />
-    <state width="1899" height="283" key="GridCell.Tab.0.center" timestamp="1592922572154">
+    <state width="1899" height="283" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1592944675924" />
+    <state width="1899" height="283" key="GridCell.Tab.0.center" timestamp="1592944675924">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="283" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1592922572154" />
-    <state width="1899" height="283" key="GridCell.Tab.0.left" timestamp="1592922572153">
+    <state width="1899" height="283" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1592944675924" />
+    <state width="1899" height="283" key="GridCell.Tab.0.left" timestamp="1592944675924">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="283" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1592922572153" />
-    <state width="1899" height="283" key="GridCell.Tab.0.right" timestamp="1592922572154">
+    <state width="1899" height="283" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1592944675924" />
+    <state width="1899" height="283" key="GridCell.Tab.0.right" timestamp="1592944675924">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="283" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1592922572154" />
+    <state width="1899" height="283" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1592944675924" />
     <state x="120" y="160" key="SettingsEditor" timestamp="1592788548137">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

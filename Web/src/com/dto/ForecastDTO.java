@@ -6,13 +6,13 @@ public class ForecastDTO {
 	private String saleDate;
 	private int shopID;
 	private int itemID;
-	private int saleCount;
+	private float saleCount;
 	
 	public ForecastDTO() {
 		super();
 	}
 	
-	public ForecastDTO(int forecastID, String baseDate, String saleDate, int shopID, int itemID, int saleCount) {
+	public ForecastDTO(int forecastID, String baseDate, String saleDate, int shopID, int itemID, float saleCount) {
 		super();
 		this.forecastID = forecastID;
 		this.baseDate = baseDate;
@@ -52,10 +52,10 @@ public class ForecastDTO {
 	public void setItemID(int itemID) {
 		this.itemID = itemID;
 	}
-	public int getSaleCount() {
+	public float getSaleCount() {
 		return saleCount;
 	}
-	public void setSaleCount(int saleCount) {
+	public void setSaleCount(float saleCount) {
 		this.saleCount = saleCount;
 	}
 	

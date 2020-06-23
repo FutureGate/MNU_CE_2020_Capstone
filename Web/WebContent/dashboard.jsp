@@ -52,6 +52,9 @@
 
 				<div class="ui divider"></div>
 
+				<div class="ui red message" id="errorMessage">
+					
+				</div>
 				<div class="ui segment" id="viewSegment">
 					<h4 class="ui header left aligned">
 						<div class="content">
@@ -63,10 +66,16 @@
 					<div class="ui middle aligned divided list">
 						<div class="ui grid">
 							<div class="row">
-								<div class="ten wide column">
+								<div class="five wide column">
 	      							<div class="ui fluid icon input">
 								  		<input type="text" name="itemID" id="itemIDInput" placeholder="상품 번호" onChange="onChangeListener();" disabled>
 								  		<i class="inverted circular link search icon"  id="itemSearchButton"></i>
+									</div>
+								</div>
+								
+								<div class="five wide column">
+	      							<div class="ui fluid input">
+								  		<input type="text" name="itemName" id="itemNameInput" placeholder="상품 이름" onChange="onChangeListener();" disabled>
 									</div>
 								</div>
 								
@@ -174,6 +183,8 @@
 		var itemIDInput = $('#itemIDInput');
 		var itemNameInput = $('#itemNameInput');
 		
+		var errorMessage = $('#errorMessage');
+		
 		var isItemSelected = false;
 		var selectedItemTableRowId = -1;
 		
@@ -186,6 +197,8 @@
 			tick();
 			
 			setInterval(tick, 1000);
+			
+			errorMessage.hide();
 			
 			setListener();
 		});
@@ -211,26 +224,30 @@
 		}
 		
 		function request() {
+			errorMessage.hide();
+			itemID = itemIDInput.val();
 			
 			$.ajax({
 				url: 'http://localhost:12038/process',
 				type: 'post',
 				data : {
-					shopID: shopID
+					shopID: shopID,
+					itemID: itemID
 				},
 				success: function(data) {
 					if(data == "") {
-						alert("해당 결과가 존재하지 않습니다.");
 						return;
 					}
-
-					var shopID = data.result;
-					
-					alert(result);
-					
 				},
-				error: function(xtr, status, error) {
-					alert('error');
+				error: function(req, status, error) {
+					if(req.status == 577 ) {
+						errorMessage.show();
+						errorMessage.html('정보가 이미 최신입니다.');
+					} else if(req.status == 578) {
+						errorMessage.show();
+						errorMessage.html('최소 14개 이상의 판매 이력이 필요합니다.');
+					}
+					
 				},
 				complete: function(data) {
 				}
@@ -354,6 +371,20 @@
 				},
 				success: function(data) {
 					if(data == "") {
+						requestStateIcon.removeClass('green');
+						requestStateIcon.removeClass('red');
+						requestStateIcon.removeClass('black');
+						
+						requestStateIcon.addClass('black');
+						
+						requestDateCell.html('요청일 : -');
+						requestItemIDCell.html('상품 번호 : -');
+						
+						requestStateCell.html('상태 : -');
+						requestItemNameCell.html('상품 이름 : -');
+						
+						setFormState(true);
+						
 						return;
 					}
 					
@@ -395,12 +426,14 @@
 		}
 		
 		function setFormState(state) {
+			requestButton.removeClass('loading');
+			
 			if(state == false) {
 				itemSearchButton.removeClass('link');
 				requestButton.addClass('disabled');
+				
 			} else if(state == true) {
 				itemSearchButton.addClass('link');
-				requestButton.removeClass('disabled');
 			}
 			
 		}

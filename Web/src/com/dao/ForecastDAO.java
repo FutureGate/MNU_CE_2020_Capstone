@@ -44,7 +44,7 @@ public class ForecastDAO {
 		
 		ArrayList<ForecastDTO> list = null;
 		
-		String sql = "select * from forecast_table where shop_id = ? and item_id = ? and base_date = ? order by sale_date desc";
+		String sql = "select * from forecast_table where shop_id = ? and item_id = ? and base_date = ? order by sale_date";
 		
 		try {
 			conn = DBConnector.getInstance().getConnector();
@@ -66,7 +66,7 @@ public class ForecastDAO {
 				forecast.setSaleDate(rs.getString("sale_date"));
 				forecast.setShopID(Integer.parseInt(shopID));
 				forecast.setItemID(Integer.parseInt(itemID));
-				forecast.setSaleCount(rs.getInt("sale_count"));
+				forecast.setSaleCount(rs.getFloat("sale_count"));
 				
 				
 				list.add(forecast);
