@@ -25,7 +25,7 @@ from tensorflow.keras.models import model_from_json
 from model.forecast import forecastDAO
 from model.request import requestDAO
 
-weight_path = 'C:/weights/'
+weight_path = 'D:/weights/'
 
 
 def create_date_list(start_date, end_date):

@@ -18,11 +18,11 @@
 		<br> <br> <br>
 		<a class="item header" href="./dashboard.do"> 대시보드 </a>
 		<a class="item header" href="./monitoringItem.do"> 제품별 수요 모니터링 </a>
+		<a class="item header" href="./monitoringSeasonal.do"> 계절별 수요 모니터링 </a>
 		
 		<!-- 
 		
 		<a class="item header" href="./monitoringMonthly.do"> 월별 수요 모니터링 </a>
-		<a class="item header" href="#"> 계절별 수요 모니터링 </a>
 		<a class="item header" href="#"> 명절별 수요 모니터링 </a>
 		
 		-->

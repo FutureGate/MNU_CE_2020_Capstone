@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.command.Command;
 import com.command.forecast.ForecastSearchCommand;
+import com.command.forecast.MonthlyForecastSearchCommand;
 import com.command.item.ItemDeleteCommand;
 import com.command.item.ItemSaveCommand;
 import com.command.item.ItemSearchCommand;
@@ -182,11 +183,13 @@ public class Controller extends HttpServlet {
 			forward = cmd.execute(req, res);
 		
 		
-		} else if (page.equals("/monitoringMonthly.do")) {
-			
-			// (임시)
-			forward = new ForwardingAction(false, "monitoringMonthly.jsp");
 		} else if (page.equals("/monitoringSeasonal.do")) {
+			forward = new ForwardingAction(false, "monitoringSeasonal.jsp");
+			
+		} else if (page.equals("/monitoringSeasonalForecastSearch.do")) {
+			cmd = new MonthlyForecastSearchCommand();
+			
+			forward = cmd.execute(req, res);
 			
 		} else if (page.equals("/monitoringHoliday.do")) {
 			
