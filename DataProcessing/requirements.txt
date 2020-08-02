@@ -6,10 +6,12 @@ pandas
 PyMySQL
 seaborn
 scikit-learn
-tensorflow-gpu==1.15.2
+
 cryptography
 flask
 flask-restful
 flask-mysql
 flask-cors
 sklearn
+
+# tensorflow-gpu==1.15.2

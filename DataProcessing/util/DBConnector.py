@@ -3,7 +3,7 @@ import pymysql
 
 class DBConnector:
     db = None
-    host = "114.70.93.127"
+    host = "127.0.0.1"
     port = 11081
     id = "capstone"
     password = "zoqtmxhs"

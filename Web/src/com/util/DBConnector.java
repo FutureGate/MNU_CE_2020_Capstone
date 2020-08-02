@@ -8,7 +8,7 @@ public class DBConnector {
 	private static DBConnector instance = new DBConnector();
 	
 	private final String driver = "com.mysql.cj.jdbc.Driver";
-	private final String url = "jdbc:mysql://114.70.93.127:11081/demand_prediction?serverTimezone=UTC&characterEncoding=utf8";
+	private final String url = "jdbc:mysql://127.0.0.1:11081/demand_prediction?serverTimezone=UTC&characterEncoding=utf8";
 	private final String user = "capstone";
 	private final String password = "zoqtmxhs";
 	

@@ -96,6 +96,26 @@ create table FORECAST_TABLE (
 ) default character set utf8mb4 collate utf8mb4_bin;
 
 
+
+-- ----------------------------------------------
+-- 월간 예측치 테이블
+-- ----------------------------------------------
+
+create table MONTHLY_FORECAST_TABLE (
+    `forecast_id`				integer auto_increment not null,
+    `base_date`					date not null,
+    `sale_date`					date not null,
+    `season`					varchar(5),
+	`shop_id`					integer not null,
+    `item_id`					integer not null,
+    `sale_count`				float(5, 2) not null,
+    primary key(forecast_id),
+    foreign key (shop_id) references SHOP_TABLE (shop_id),
+    foreign key (item_id) references ITEM_TABLE (item_id)
+) default character set utf8mb4 collate utf8mb4_bin;
+
+
+
 -- ----------------------------------------------
 -- 통계 테이블
 -- ----------------------------------------------
