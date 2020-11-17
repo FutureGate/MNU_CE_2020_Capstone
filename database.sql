@@ -105,7 +105,7 @@ create table MONTHLY_FORECAST_TABLE (
     `forecast_id`				integer auto_increment not null,
     `base_date`					date not null,
     `sale_date`					date not null,
-    `season`					varchar(5),
+    `season`					varchar(10),
 	`shop_id`					integer not null,
     `item_id`					integer not null,
     `sale_count`				float(8, 2) not null,

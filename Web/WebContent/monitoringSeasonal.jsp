@@ -222,12 +222,9 @@
 							}
 						}],
 						xAxes: [{
-							scaleLabel: {
-								display: true,
-								labelString: '날짜'
-							}
+							display: true
 						}]
-					},
+					}
 				}
 			};
 		
@@ -452,7 +449,28 @@
 			
 			var labels = [];
 			datasets = [{
-				label : '판매량',
+				label : '봄 판매량',
+				backgroundColor: 'pink',
+				borderColor: 'pink',
+				fill: false,
+				data: []
+			},
+			{
+				label : '여름 판매량',
+				backgroundColor: 'blue',
+				borderColor: 'blue',
+				fill: false,
+				data: []
+			},
+			{
+				label : '가을 판매량',
+				backgroundColor: 'orange',
+				borderColor: 'orange',
+				fill: false,
+				data: []
+			},
+			{
+				label : '겨울 판매량',
 				backgroundColor: 'rgba(75, 192, 192, 1)',
 				borderColor: 'rgba(75, 192, 192, 1)',
 				fill: false,
@@ -461,7 +479,30 @@
 			
 			for(i=0; i<result.length; i++) {
 				labels.push(result[i].saleDate);
-				datasets[0].data.push(result[i].saleCount);
+				
+				season = result[i].season;
+				if(season == 'spring') {
+					datasets[0].data.push(result[i].saleCount);
+					datasets[1].data.push(null);
+					datasets[2].data.push(null);
+					datasets[3].data.push(null);
+				} else if(season == 'summer') {
+					datasets[1].data.push(result[i].saleCount);
+					datasets[0].data.push(null);
+					datasets[2].data.push(null);
+					datasets[3].data.push(null);
+				} else if(season == 'fall') {
+					datasets[2].data.push(result[i].saleCount);
+					datasets[0].data.push(null);
+					datasets[1].data.push(null);
+					datasets[3].data.push(null);
+				} else if(season == 'winter') {
+					datasets[0].data.push(null);
+					datasets[1].data.push(null);
+					datasets[2].data.push(null);
+					datasets[3].data.push(result[i].saleCount);
+				}
+				
 			}
 			
 			forecastChartConfig.data.datasets = datasets;

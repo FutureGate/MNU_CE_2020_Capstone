@@ -1,17 +1,18 @@
-numpy
+numpy~=1.19.1
 scipy
 cython
 h5py
-pandas
-PyMySQL
+pandas~=1.1.0
+PyMySQL~=0.10.0
 seaborn
 scikit-learn
 
 cryptography
-flask
+flask~=1.1.2
 flask-restful
 flask-mysql
 flask-cors
 sklearn
 
 # tensorflow-gpu==1.15.2
+tensorflow-gpu~=1.15.2

@@ -41,6 +41,8 @@ def process():
     shop_id = request.form.get('shopID')
     item_id = request.form.get('itemID')
 
+    print(shop_id, item_id)
+
     check = do_check(shop_id, item_id)
 
     if check is 0:

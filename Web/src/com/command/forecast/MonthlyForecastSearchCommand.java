@@ -66,6 +66,7 @@ public class MonthlyForecastSearchCommand implements Command {
 			
 			result.append("{\"id\": \"" + id + "\",");
 			result.append("\"saleDate\": \"" + list.get(i).getSaleDate() + "\",");
+			result.append("\"season\": \"" + list.get(i).getSeason() + "\",");
 			result.append("\"saleCount\": \"" + list.get(i).getSaleCount() + "\"}");
 			
 			if(i != list.size() -1) result.append(",");

@@ -1,28 +1,25 @@
+import gc
+
 import numpy as np
 import pandas as pd
-import seaborn as sns
-import math
-
-import gc;
 
 gc.collect
 
 from datetime import date, datetime
 
 import os
+import copy
 
 from model.sale import saleDAO
 
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout
 from tensorflow.keras.layers import LSTM
-from sklearn.preprocessing import MinMaxScaler
-from sklearn.metrics import mean_squared_error
 
-from tensorflow.keras.callbacks import ModelCheckpoint
 from tensorflow.keras.models import model_from_json
 
 from model.forecast import forecastDAO
+from model.forecast import monthlyForecastDAO
 from model.request import requestDAO
 
 weight_path = 'D:/weights/'
@@ -187,6 +184,10 @@ def start_predict(shop_id, item_id, request_id):
     df['saleDate'] = pd.to_datetime(df['saleDate'], format='%Y-%m-%d')
 
     df = df.set_index("saleDate")
+
+    # 연간 데이터를 위한 입력 생성
+    annual_df = copy.deepcopy(df)
+
     df = df.values
 
     # 데이터 셋 생성
@@ -203,7 +204,6 @@ def start_predict(shop_id, item_id, request_id):
     data = np.array(test_data)
 
     for i in range(0, 10):
-
         data = np.reshape(data, (data.shape[0], 1, data.shape[1]))
 
         prediction = model.predict(data)
@@ -222,7 +222,19 @@ def start_predict(shop_id, item_id, request_id):
 
         data = np.reshape(data, (1, data.shape[0]))
 
+    # 연간 예측 데이터 출력
+    annual_df.drop("shopID", axis=1, inplace=True)
+    annual_df.drop("itemID", axis=1, inplace=True)
+
+    annual_df = annual_df.values
+    annual_x, annual_y = create_dataset(annual_df, look_back)
+    annual_x = np.reshape(annual_x, (annual_x.shape[0], 1, annual_x.shape[1]))
+
+    annual_predict = model.predict(annual_x)
+
     forecastDAO.insert(result, base_date, shop_id, item_id)
+
+    monthlyForecastDAO.insert(annual_predict, base_date, shop_id, item_id)
 
 
 def create_dataset(dataset, look_back=1):

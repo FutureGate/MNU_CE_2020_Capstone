@@ -194,8 +194,6 @@ insert into `SALE_TABLE` values (0,'2020-06-17 00:00:00',1,3,2);
 insert into `SALE_TABLE` values (0,'2020-06-18 00:00:00',1,3,8);
 insert into `SALE_TABLE` values (0,'2020-06-19 00:00:00',1,3,4);
 insert into `SALE_TABLE` values (0,'2020-06-20 00:00:00',1,3,2);
-
-
 insert into `SALE_TABLE` values (0,'2020-06-21 00:00:00',1,3,2);
 insert into `SALE_TABLE` values (0,'2020-06-22 00:00:00',1,3,5);
 insert into `SALE_TABLE` values (0,'2020-06-23 00:00:00',1,3,3);
