@@ -26,7 +26,7 @@ public class SaleUploadCommand implements Command {
 		String viewPage = null;
 		
 		
-		String saveDir = "C:\\upload";
+		String saveDir = "D:\\upload";
 
 		int maxSize = 1024*1024*3;
 		

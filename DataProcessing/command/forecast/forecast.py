@@ -170,6 +170,9 @@ def start_predict(shop_id, item_id, request_id):
     # 데이터 로드
     df = saleDAO.get_sale_array(shop_id, item_id)
 
+    # 연간 데이터를 위한 입력 생성
+    annual_df = copy.deepcopy(df)
+
     base_date = datetime.strftime(df.iloc[-1:]['saleDate'].values[0], "%Y-%m-%d")
 
     # 판매량이 없는 날짜 0으로 채우기
@@ -185,8 +188,29 @@ def start_predict(shop_id, item_id, request_id):
 
     df = df.set_index("saleDate")
 
-    # 연간 데이터를 위한 입력 생성
-    annual_df = copy.deepcopy(df)
+    # 판매량이 없는 날짜 0으로 채우기
+    annual_df.drop("shopID", axis=1, inplace=True)
+    annual_df.drop("itemID", axis=1, inplace=True)
+
+    start_date_df = annual_df[:1]
+    end_date_df = annual_df[-1:]
+
+    start_date = str(start_date_df.iloc[0]['saleDate'])
+    end_date = str(end_date_df.iloc[0]['saleDate'])
+    start_year, start_month, start_day = str_to_int_date(start_date)
+    end_year, end_month, end_day = str_to_int_date(end_date)
+
+    start_date = date(start_year, start_month, start_day)
+    end_date = date(end_year, end_month, end_day)
+
+    df_date = create_date_list(start_date, end_date)
+
+    annual_df['saleDate'] = pd.to_datetime(annual_df['saleDate'], format='%Y-%m-%d')
+    df_date['saleDate'] = pd.to_datetime(df_date['saleDate'], format='%Y-%m-%d')
+
+    annual_df = pd.merge(df_date, annual_df, how='left', on=['saleDate'])
+    annual_df.fillna(0, inplace=True)
+    annual_df['saleDate'] = pd.to_datetime(annual_df['saleDate'], format='%Y-%m-%d')
 
     df = df.values
 
@@ -223,11 +247,11 @@ def start_predict(shop_id, item_id, request_id):
         data = np.reshape(data, (1, data.shape[0]))
 
     # 연간 예측 데이터 출력
-    annual_df.drop("shopID", axis=1, inplace=True)
-    annual_df.drop("itemID", axis=1, inplace=True)
 
+    annual_df = annual_df.set_index("saleDate")
     annual_df = annual_df.values
     annual_x, annual_y = create_dataset(annual_df, look_back)
+
     annual_x = np.reshape(annual_x, (annual_x.shape[0], 1, annual_x.shape[1]))
 
     annual_predict = model.predict(annual_x)

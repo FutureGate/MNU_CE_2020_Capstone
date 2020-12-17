@@ -19,7 +19,7 @@ public class SaleFormDownloadCommand implements Command {
 		boolean isRedirect = true;
 		String viewPage = null;
 		
-		String saveDir = "C:\\upload";
+		String saveDir = "D:\\upload";
 		String encType = "UTF-8";
 		
 		String fileName = "form.xlsx";
