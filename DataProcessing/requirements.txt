@@ -1,13 +1,13 @@
-numpy~=1.19.1
-scipy
+numpy==1.19.1
+scipy==1.5.2
 cython
-h5py
-pandas~=1.1.0
-PyMySQL~=0.10.0
-seaborn
+h5py==2.10
+pandas==1.1.0
+PyMySQL==0.10.0
+seaborn==0.10.1
 scikit-learn
 
-cryptography
+cryptography==3.0
 flask~=1.1.2
 flask-restful
 flask-mysql
@@ -15,4 +15,4 @@ flask-cors
 sklearn
 
 # tensorflow-gpu==1.15.2
-tensorflow-gpu~=1.15.2
+tensorflow-gpu==1.15.2
