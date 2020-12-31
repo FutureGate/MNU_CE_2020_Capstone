@@ -175,6 +175,8 @@
 		var search = '';
 		var itemID = -1;
 		
+		var isProcessing = false;
+		
 		var cancelButton = $('#modalCancelButton');
 		var confirmButton = $('#modalConfirmButton');
 		var searchItemButton = $('#searchItemButton');
@@ -246,6 +248,9 @@
 					} else if(req.status == 578) {
 						errorMessage.show();
 						errorMessage.html('최소 14개 이상의 판매 이력이 필요합니다.');
+					} else if(req.status == 576) {
+						errorMessage.show();
+						errorMessage.html('최근 처리된 데이터 이후로 최소 1개이상의 추가된 데이터가 필요합니다.');
 					}
 					
 				},
@@ -404,21 +409,30 @@
 					requestStateIcon.removeClass('black');
 					
 					if(state == '처리 중') {
+						isProcessing = true;
+						
+						setRequestButtonState(false);
 						requestStateIcon.addClass('green');
 						
 						setFormState(false);
 					} else if(state == '오류 발생'){
+						isProcessing = false;
 						requestStateIcon.addClass('red');
 						
 						setFormState(true);
 					} else if(state == '완료') {
+						
+						if(isProcessing) {
+							setRequestButtonState(true);
+						}
+						
+						isProcessing = false;
 						requestStateIcon.addClass('black');
 						
 						setFormState(true);
+						
 					}
 						
-					
-										
 				},
 				complete: function(data) {
 				}
@@ -436,6 +450,15 @@
 				itemSearchButton.addClass('link');
 			}
 			
+		}
+		
+		function setRequestButtonState(state) {
+			if(state == false) {
+				requestButton.addClass('disabled');
+				
+			} else if(state == true) {
+				requestButton.removeClass('disabled');
+			}
 		}
 	</script>
 </body>

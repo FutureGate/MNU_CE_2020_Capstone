@@ -16,7 +16,7 @@ def get_current_request_id():
 
     cursor = db.cursor()
 
-    sql = 'select * from request_table order by request_date desc;'
+    sql = 'select * from request_table order by request_date asc;'
 
     cursor.execute(sql)
 

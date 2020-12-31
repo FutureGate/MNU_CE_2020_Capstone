@@ -41,7 +41,7 @@ def process():
     shop_id = request.form.get('shopID')
     item_id = request.form.get('itemID')
 
-    print(shop_id, item_id)
+    # print(shop_id, item_id)
 
     check = do_check(shop_id, item_id)
 
@@ -49,6 +49,8 @@ def process():
         return {'error': 'error'}, 578
     elif check is -1:
         return {'error': 'error'}, 577
+    elif check is -2:
+        return {'error': 'error'}, 576
 
     request_id = requestDAO.add(shop_id, item_id)
 
